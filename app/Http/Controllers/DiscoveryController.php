@@ -1,0 +1,120 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Services\YouTubeService;
+use App\Services\GeminiService;
+use App\Services\KieAIService;
+use App\Services\YouTubeUploadService;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class DiscoveryController extends Controller
+{
+    public function index()
+    {
+        return Inertia::render('Dashboard', [
+            'hasYouTube' => (bool) auth()->user()->google_refresh_token,
+        ]);
+    }
+
+    public function search(Request $request, YouTubeService $youtube)
+    {
+        $query = $request->query('q', 'trending shorts');
+        $videos = $youtube->searchShorts($query);
+        
+        return response()->json(['videos' => $videos]);
+    }
+
+    public function remake(Request $request, YouTubeService $youtube, GeminiService $gemini)
+    {
+        $videoId = $request->input('videoId');
+        $videoData = $youtube->getVideoDetails($videoId);
+
+        if (!$videoData) {
+            return response()->json(['error' => 'Video not found'], 404);
+        }
+
+        $context = [
+            'title' => $videoData['snippet']['title'],
+            'description' => $videoData['snippet']['description'],
+        ];
+
+        $plan = $gemini->analyzeVideo($context);
+
+        return response()->json([
+            'success' => true,
+            'plan' => $plan,
+            'originalVideo' => $context
+        ]);
+    }
+
+    public function generate(Request $request, KieAIService $kie)
+    {
+        $prompt = $request->input('prompt');
+        $plan = $request->input('plan');
+        $video = $request->input('selectedVideo');
+        
+        $taskId = $kie->createVideoTask($prompt);
+
+        // 持久化任務
+        \App\Models\RemakeTask::create([
+            'user_id' => auth()->id(),
+            'original_video_id' => $video['id'] ?? null,
+            'original_title' => $video['title'] ?? null,
+            'task_id' => $taskId,
+            'status' => 'pending',
+            'visual_prompt' => $prompt,
+            'optimized_title' => $plan['optimizedTitle'] ?? null,
+            'seo_description' => $plan['seoDescription'] ?? null,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'taskId' => $taskId
+        ]);
+    }
+
+    public function status(Request $request, KieAIService $kie)
+    {
+        $taskId = $request->query('taskId');
+        $status = $kie->getTaskStatus($taskId);
+
+        // 同步狀態到資料庫
+        \App\Models\RemakeTask::where('task_id', $taskId)->update([
+            'status' => $status['state'],
+            'progress' => $status['progress'],
+            'video_url' => $status['video_url'],
+        ]);
+
+        return response()->json($status);
+    }
+
+    public function history()
+    {
+        $tasks = \App\Models\RemakeTask::where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        return response()->json(['tasks' => $tasks]);
+    }
+
+    public function publish(Request $request, YouTubeUploadService $publisher)
+    {
+        $videoUrl = $request->input('videoUrl');
+        $metadata = $request->input('plan');
+        $taskId = $request->input('taskId'); // 接收 taskId
+
+        try {
+            $publisher->upload(auth()->user(), $videoUrl, [
+                'title' => $metadata['optimizedTitle'],
+                'description' => $metadata['seoDescription'],
+                'tags' => ['#shorts', '#ai', '#viral']
+            ], $taskId);
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+}
