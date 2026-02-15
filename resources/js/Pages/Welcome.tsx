@@ -12,7 +12,8 @@ import {
     BarChart3, 
     Globe, 
     MessageSquare,
-    Youtube
+    Youtube,
+    Sparkles
 } from "lucide-react";
 import Pricing from "@/Components/Pricing";
 
@@ -49,7 +50,10 @@ export default function Welcome({
 
     return (
         <>
-            <Head title="ShortsAIPro - 全自動 AI 短影音獲利機器" />
+            <Head>
+                <title>ShortsAIPro - 專業級 AI 短影音二創與流量增長工具</title>
+                <meta name="description" content="別再為沒內容煩惱！ShortsAIPro 提供一鍵重製爆紅短影音功能，支援 YouTube、TikTok、Instagram。獨家 AI 視覺去重技術，100% 規避版權限流，助您流量翻倍。" />
+            </Head>
             <div className="bg-zinc-950 text-zinc-50 min-h-screen flex flex-col selection:bg-yellow-400 selection:text-black">
                 {/* Navigation */}
                 <nav className="border-b border-zinc-800 bg-zinc-950/50 backdrop-blur-md sticky top-0 z-50">
@@ -104,28 +108,48 @@ export default function Welcome({
                                 <span>2026 短影音藍海策略：全自動 AI 獲利機器</span>
                             </div>
                             <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-none">
-                                30 秒，把爆紅腳本 <br />
-                                <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">變成你的流量</span>
+                                別再為沒內容煩惱。 <br />
+                                <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">一鍵重製爆紅短影音</span>
                             </h1>
                             <p className="text-zinc-400 text-xl md:text-2xl mb-12 max-w-3xl mx-auto leading-relaxed">
-                                自動搜尋熱門影片、AI 智慧視覺重構、100% 原創規避版權。
-                                <span className="text-white font-bold"> 無需露臉、無需剪輯，讓你的頻道 24/7 自動成長。</span>
+                                支援 <span className="text-white font-bold">YouTube / TikTok / IG</span> 全平台。獨家 AI 視覺去重技術，
+                                <span className="text-white font-bold"> 100% 規避版權限流，讓流量翻倍。</span>
                             </p>
                             
+                            {/* Mock Input Box for PLG */}
+                            <div className="max-w-2xl mx-auto mb-12 relative group">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                                <div className="relative flex flex-col sm:flex-row gap-2 bg-zinc-900 border border-zinc-800 p-2 rounded-2xl">
+                                    <input 
+                                        type="text" 
+                                        placeholder="貼上 YouTube 或 TikTok 影片連結..." 
+                                        className="flex-grow bg-transparent border-none text-white px-4 py-3 focus:ring-0 outline-none text-lg"
+                                        readOnly
+                                    />
+                                    <Link 
+                                        href={route('register')}
+                                        className="bg-yellow-400 text-black px-8 py-3 rounded-xl font-black hover:bg-yellow-300 transition-all flex items-center justify-center gap-2 whitespace-nowrap"
+                                    >
+                                        立即重製 <Sparkles size={20} />
+                                    </Link>
+                                </div>
+                                <p className="mt-4 text-zinc-500 text-sm">💡 試試貼上任何熱門短片連結，看 AI 如何為你重生內容</p>
+                            </div>
+
                             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                                <Link 
-                                    href={route('register')}
-                                    className="w-full sm:w-auto bg-yellow-400 text-black px-10 py-5 rounded-2xl font-black text-xl hover:bg-yellow-300 transition-all flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(250,204,21,0.3)] hover:scale-105 active:scale-95"
-                                >
-                                    立即免費啟動 <Play size={24} className="fill-black" />
-                                </Link>
-                                <div className="flex items-center gap-4 text-zinc-500 text-sm">
-                                    <div className="flex -space-x-2">
-                                        {[1,2,3,4].map(i => (
-                                            <div key={i} className="w-8 h-8 rounded-full border-2 border-zinc-950 bg-zinc-800 flex items-center justify-center font-bold text-[10px]">U{i}</div>
-                                        ))}
+                                <div className="flex items-center gap-8 text-zinc-400 text-sm font-bold uppercase tracking-widest">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                        20+ 語言支援
                                     </div>
-                                    <span>已有 50,000+ 創作者加入</span>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                        99% 避開版權偵測
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                        全自動發布
+                                    </div>
                                 </div>
                             </div>
                         </div>
