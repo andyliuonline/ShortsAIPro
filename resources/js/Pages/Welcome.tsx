@@ -57,7 +57,7 @@ export default function Welcome({
                         <div className="flex justify-between h-16 items-center">
                             <div className="flex items-center gap-2">
                                 <Zap className="text-yellow-400 fill-yellow-400" size={24} />
-                                <span className="text-xl font-bold tracking-tight italic">Shorts<span className="text-yellow-400">Pro</span></span>
+                                <span className="text-xl font-bold tracking-tight italic">ShortsAI<span className="text-yellow-400">Pro</span></span>
                             </div>
                             <div className="hidden md:flex items-center gap-8">
                                 <a href="#features" className="text-sm text-zinc-400 hover:text-white transition-colors">功能特性</a>
@@ -299,7 +299,7 @@ export default function Welcome({
                             <div className="col-span-1 md:col-span-2 space-y-6">
                                 <div className="flex items-center gap-2">
                                     <Zap className="text-yellow-400 fill-yellow-400" size={32} />
-                                    <span className="text-3xl font-black tracking-tighter italic">Shorts<span className="text-yellow-400">Pro</span></span>
+                                    <span className="text-3xl font-black tracking-tighter italic">ShortsAI<span className="text-yellow-400">Pro</span></span>
                                 </div>
                                 <p className="text-zinc-500 max-w-sm">
                                     ShortsAIPro 是全球領先的 AI 短影音全自動化平台。我們利用尖端的生成式 AI 技術，幫助創作者與企業快速建立影響力並實現獲利。
