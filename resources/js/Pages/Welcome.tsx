@@ -104,12 +104,12 @@ export default function Welcome({
                                 <span>2026 短影音藍海策略：全自動 AI 獲利機器</span>
                             </div>
                             <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-none">
-                                讓 AI 為你製造 <br />
-                                <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">百萬流量大軍</span>
+                                30 秒，把爆紅腳本 <br />
+                                <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">變成你的流量</span>
                             </h1>
                             <p className="text-zinc-400 text-xl md:text-2xl mb-12 max-w-3xl mx-auto leading-relaxed">
-                                自動搜尋熱門影片、AI 智慧重製視覺、SEO 標題優化、一鍵發布。
-                                <span className="text-white font-bold"> 無需露臉、無需剪輯、無需經驗。</span>
+                                自動搜尋熱門影片、AI 智慧視覺重構、100% 原創規避版權。
+                                <span className="text-white font-bold"> 無需露臉、無需剪輯，讓你的頻道 24/7 自動成長。</span>
                             </p>
                             
                             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -203,22 +203,22 @@ export default function Welcome({
                                         <div className="flex gap-4">
                                             <div className="w-8 h-8 rounded-full bg-yellow-400 text-black flex items-center justify-center font-black shrink-0">1</div>
                                             <div>
-                                                <h4 className="text-xl font-bold mb-2">輸入關鍵字搜尋</h4>
-                                                <p className="text-zinc-400">輸入你想做的領域，系統自動找出當下最熱門的爆紅原型。</p>
+                                                <h4 className="text-xl font-bold mb-2">Paste Link</h4>
+                                                <p className="text-zinc-400">貼上你想模仿的爆紅影片連結，或使用大數據推薦原型。</p>
                                             </div>
                                         </div>
                                         <div className="flex gap-4">
                                             <div className="w-8 h-8 rounded-full bg-yellow-400 text-black flex items-center justify-center font-black shrink-0">2</div>
                                             <div>
-                                                <h4 className="text-xl font-bold mb-2">AI 一鍵重製</h4>
-                                                <p className="text-zinc-400">點擊重製，AI 將自動分析並生成全新的 8K 高清影片。</p>
+                                                <h4 className="text-xl font-bold mb-2">AI Remake</h4>
+                                                <p className="text-zinc-400">一鍵重構視覺幀與音軌，生成 100% 原創的 8K 高清影片。</p>
                                             </div>
                                         </div>
                                         <div className="flex gap-4">
                                             <div className="w-8 h-8 rounded-full bg-yellow-400 text-black flex items-center justify-center font-black shrink-0">3</div>
                                             <div>
-                                                <h4 className="text-xl font-bold mb-2">自動發布獲利</h4>
-                                                <p className="text-zinc-400">設定發布頻道，剩下的交給 ShortsAIPro。你只需要觀察流量成長。</p>
+                                                <h4 className="text-xl font-bold mb-2">Go Viral</h4>
+                                                <p className="text-zinc-400">設定自動發布，觀察流量成長。規避平台限流，安全起飛。</p>
                                             </div>
                                         </div>
                                     </div>
