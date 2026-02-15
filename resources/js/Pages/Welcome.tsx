@@ -23,13 +23,13 @@ export default function Welcome({
         {
             name: "陳小明",
             role: "YouTube 創作者 (10萬訂閱)",
-            content: "自從使用了 ShortsPro，我每天只需要花 10 分鐘就能產出高品質短影音。頻道觀看數在一個月內成長了 400%！",
+            content: "自從使用了 ShortsAIPro，我每天只需要花 10 分鐘就能產出高品質短影音。頻道觀看數在一個月內成長了 400%！",
             avatar: "陳"
         },
         {
             name: "Sarah Lin",
             role: "電商經營者",
-            content: "以前請剪輯師每月要花好幾萬，現在靠 ShortsPro 自動重製爆紅影片，成本降低了 90%，轉單率反而更高了。",
+            content: "以前請剪輯師每月要花好幾萬，現在靠 ShortsAIPro 自動重製爆紅影片，成本降低了 90%，轉單率反而更高了。",
             avatar: "S"
         },
         {
@@ -49,7 +49,7 @@ export default function Welcome({
 
     return (
         <>
-            <Head title="ShortsPro - 全自動 AI 短影音獲利機器" />
+            <Head title="ShortsAIPro - 全自動 AI 短影音獲利機器" />
             <div className="bg-zinc-950 text-zinc-50 min-h-screen flex flex-col selection:bg-yellow-400 selection:text-black">
                 {/* Navigation */}
                 <nav className="border-b border-zinc-800 bg-zinc-950/50 backdrop-blur-md sticky top-0 z-50">
@@ -149,7 +149,7 @@ export default function Welcome({
                     <section className="py-32 px-4" id="features">
                         <div className="max-w-7xl mx-auto">
                             <div className="text-center mb-20">
-                                <h2 className="text-4xl md:text-5xl font-black mb-6">為什麼選擇 ShortsPro？</h2>
+                                <h2 className="text-4xl md:text-5xl font-black mb-6">為什麼選擇 ShortsAIPro？</h2>
                                 <p className="text-zinc-500 text-lg">我們整合了全球最強大的 AI 模型，專為獲利而生。</p>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -218,7 +218,7 @@ export default function Welcome({
                                             <div className="w-8 h-8 rounded-full bg-yellow-400 text-black flex items-center justify-center font-black shrink-0">3</div>
                                             <div>
                                                 <h4 className="text-xl font-bold mb-2">自動發布獲利</h4>
-                                                <p className="text-zinc-400">設定發布頻道，剩下的交給 ShortsPro。你只需要觀察流量成長。</p>
+                                                <p className="text-zinc-400">設定發布頻道，剩下的交給 ShortsAIPro。你只需要觀察流量成長。</p>
                                             </div>
                                         </div>
                                     </div>
@@ -302,7 +302,7 @@ export default function Welcome({
                                     <span className="text-3xl font-black tracking-tighter italic">Shorts<span className="text-yellow-400">Pro</span></span>
                                 </div>
                                 <p className="text-zinc-500 max-w-sm">
-                                    ShortsPro 是全球領先的 AI 短影音全自動化平台。我們利用尖端的生成式 AI 技術，幫助創作者與企業快速建立影響力並實現獲利。
+                                    ShortsAIPro 是全球領先的 AI 短影音全自動化平台。我們利用尖端的生成式 AI 技術，幫助創作者與企業快速建立影響力並實現獲利。
                                 </p>
                             </div>
                             <div>
@@ -325,7 +325,7 @@ export default function Welcome({
                             </div>
                         </div>
                         <div className="pt-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6">
-                            <p className="text-zinc-500 text-sm">© 2026 ShortsPro. All rights reserved. 專為百萬創作者打造。</p>
+                            <p className="text-zinc-500 text-sm">© 2026 ShortsAIPro. All rights reserved. 專為百萬創作者打造。</p>
                             <div className="flex gap-6">
                                 <Link href="#" className="text-zinc-500 hover:text-white transition-colors"><Globe size={20} /></Link>
                                 <Link href="#" className="text-zinc-500 hover:text-white transition-colors"><Youtube size={20} /></Link>
