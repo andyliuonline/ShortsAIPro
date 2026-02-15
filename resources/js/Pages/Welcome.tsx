@@ -337,6 +337,9 @@ export default function Welcome({
             </div>
             
             <style>{`
+                html {
+                    scroll-behavior: smooth;
+                }
                 @keyframes gradient {
                     0% { background-position: 0% 50%; }
                     50% { background-position: 100% 50%; }
