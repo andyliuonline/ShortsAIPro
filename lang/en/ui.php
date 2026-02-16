@@ -62,4 +62,6 @@ return [
     'consecutive_creation' => 'Streak',
     'streak_7_reward' => '7-day Bonus Earned',
     'free_plan' => 'Free Plan',
+    'admin_dashboard' => 'Admin Dashboard',
+    'dashboard_title' => 'ShortsAIPro Dashboard',
 ];

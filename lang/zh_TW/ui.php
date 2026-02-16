@@ -62,4 +62,6 @@ return [
     'consecutive_creation' => '連續創作',
     'streak_7_reward' => '獲得 7 天獎勵',
     'free_plan' => '免費方案',
+    'admin_dashboard' => '管理員後台',
+    'dashboard_title' => 'ShortsAIPro 控制台',
 ];

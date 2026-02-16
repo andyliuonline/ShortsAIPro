@@ -5,12 +5,14 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import LanguageSwitcher from '@/Components/LanguageSwitcher';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
+import { useTranslate } from "@/Helpers/useTranslate";
 
 export default function Authenticated({
     header,
     children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
     const user = usePage().props.auth.user;
+    const { t } = useTranslate();
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -32,14 +34,14 @@ export default function Authenticated({
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
-                                    控制台
+                                    {t('dashboard')}
                                 </NavLink>
                                 {user.is_admin && (
                                     <NavLink
                                         href={route('admin.dashboard')}
                                         active={route().current('admin.*')}
                                     >
-                                        管理員後台
+                                        {t('admin_dashboard')}
                                     </NavLink>
                                 )}
                             </div>
@@ -145,14 +147,14 @@ export default function Authenticated({
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
-                            控制台
+                            {t('dashboard')}
                         </ResponsiveNavLink>
                         {user.is_admin && (
                             <ResponsiveNavLink
                                 href={route('admin.dashboard')}
                                 active={route().current('admin.*')}
                             >
-                                管理員後台
+                                {t('admin_dashboard')}
                             </ResponsiveNavLink>
                         )}
                     </div>
