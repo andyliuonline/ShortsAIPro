@@ -66,6 +66,10 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => $authData,
             'referral_bonus' => session('referred_by_code') ? true : false,
+            'locale' => \App::getLocale(),
+            'translations' => [
+                'ui' => __('ui'),
+            ],
         ]);
     }
 }

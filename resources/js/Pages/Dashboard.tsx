@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import { Zap, Search, Play, Upload, TrendingUp, Loader2, Sparkles, X, CheckCircle2, AlertCircle, Youtube, History, Clock, FileVideo, CreditCard, Users, Gift, Share2, Wallet, Landmark, Trophy, Medal, Award } from "lucide-react";
 import axios from "axios";
 import Pricing from "@/Components/Pricing";
+import { useTranslate } from "@/Helpers/useTranslate";
 
 export default function Dashboard() {
-    const { auth, hasYouTube } = usePage<any>().props;
+    const { auth, hasYouTube, locale } = usePage<any>().props;
+    const { t } = useTranslate();
     const [searchQuery, setSearchQuery] = useState("");
     const [videos, setVideos] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
@@ -221,40 +223,55 @@ export default function Dashboard() {
                                 onClick={() => setView('search')}
                                 className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'search' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
                             >
-                                搜尋影片
+                                {t('search_videos')}
                             </button>
                             <button 
                                 onClick={() => setView('history')}
                                 className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'history' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
                             >
-                                製作歷史
+                                {t('history')}
                             </button>
                             <button 
                                 onClick={() => setView('pricing')}
                                 className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'pricing' ? 'bg-yellow-400 text-black shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
                             >
-                                升級方案
+                                {t('pricing')}
                             </button>
                             <button 
                                 onClick={() => setView('referral')}
                                 className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'referral' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
                             >
-                                推薦獎金
+                                {t('referral')}
                             </button>
                             <button 
                                 onClick={() => setView('leaderboard')}
                                 className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'leaderboard' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
                             >
-                                排行榜
+                                {t('leaderboard')}
                             </button>
                         </div>
                         
+                        <div className="flex bg-zinc-900 rounded-lg p-1 border border-zinc-800">
+                            <button 
+                                onClick={() => axios.post(route('language.switch'), { locale: 'zh_TW' }).then(() => window.location.reload())}
+                                className={`px-2 py-1 rounded text-[10px] font-bold ${locale === 'zh_TW' ? 'bg-zinc-700 text-white' : 'text-zinc-500'}`}
+                            >
+                                中
+                            </button>
+                            <button 
+                                onClick={() => axios.post(route('language.switch'), { locale: 'en' }).then(() => window.location.reload())}
+                                className={`px-2 py-1 rounded text-[10px] font-bold ${locale === 'en' ? 'bg-zinc-700 text-white' : 'text-zinc-500'}`}
+                            >
+                                EN
+                            </button>
+                        </div>
+
                         {!hasYouTube && (
                             <a 
                                 href={route('auth.google.redirect')}
                                 className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all"
                             >
-                                <Youtube size={18} /> 連結 YouTube
+                                <Youtube size={18} /> {t('connect_youtube')}
                             </a>
                         )}
                     </div>
@@ -292,7 +309,7 @@ export default function Dashboard() {
                                 </div>
                                 <div>
                                     <p className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">連續創作</p>
-                                    <p className="text-sm font-bold text-white uppercase">{auth.user.streak_count || 0} 天</p>
+                                    <p className="text-sm font-bold text-white uppercase">{t('streak_days', { count: auth.user.streak_count || 0 })}</p>
                                 </div>
                             </div>
                             {auth.user.streak_count >= 7 && <div className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded text-[10px] font-bold">獲得 7 天獎勵</div>}
@@ -304,15 +321,15 @@ export default function Dashboard() {
                                     <Zap size={20} />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">剩餘點數</p>
-                                    <p className="text-sm font-bold text-white uppercase">{auth.user.credits || 0} 片</p>
+                                    <p className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">{t('remaining_credits')}</p>
+                                    <p className="text-sm font-bold text-white uppercase">{auth.user.credits || 0} {t('credits_unit')}</p>
                                 </div>
                             </div>
                             <button 
                                 onClick={() => setView('pricing')}
                                 className="bg-yellow-400 text-black px-4 py-2 rounded-lg text-xs font-bold hover:bg-yellow-300 transition-all"
                             >
-                                儲值
+                                {t('recharge')}
                             </button>
                         </div>
                     </div>
@@ -625,7 +642,7 @@ export default function Dashboard() {
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
                                         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                                        placeholder="輸入關鍵字搜尋爆紅影片 (例如: 料理, 健身, 搞笑)" 
+                                        placeholder={t('search_placeholder')} 
                                         className="w-full bg-zinc-900 border border-zinc-700 rounded-xl py-4 pl-10 pr-4 text-white focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 transition-all outline-none"
                                     />
                                 </div>
@@ -634,7 +651,7 @@ export default function Dashboard() {
                                     disabled={loading}
                                     className="w-full sm:w-auto bg-yellow-400 text-black px-8 py-4 rounded-xl font-bold hover:bg-yellow-300 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                                 >
-                                    {loading ? <Loader2 className="animate-spin" size={18} /> : <>開始探索 <Play size={18} /></>}
+                                    {loading ? <Loader2 className="animate-spin" size={18} /> : <>{t('start_exploring')} <Play size={18} /></>}
                                 </button>
                             </div>
 
