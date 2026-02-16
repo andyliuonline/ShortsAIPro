@@ -6,6 +6,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\RemakeTask;
+use App\Models\ReferralCommission;
+use App\Models\UserAchievement;
+use App\Models\WithdrawalRequest;
 
 class User extends Authenticatable
 {

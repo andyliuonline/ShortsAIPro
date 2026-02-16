@@ -34,6 +34,10 @@ export default function Dashboard() {
     const [history, setHistory] = useState<any[]>([]);
     const [view, setView] = useState<'search' | 'history' | 'pricing' | 'referral' | 'leaderboard'>('search');
 
+    // Publishing State
+    const [publishing, setPublishing] = useState(false);
+    const [published, setPublished] = useState(false);
+
     // Gamification Data State
     const [gamificationData, setGamificationData] = useState<any>({ leaderboard: [], achievements: [], stats: {} });
 
@@ -272,10 +276,10 @@ export default function Dashboard() {
                                 <div className="flex-1 min-w-[120px]">
                                     <div className="flex justify-between items-end mb-1">
                                         <p className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">創作者等級</p>
-                                        <p className="text-[10px] text-zinc-400 font-bold">{auth.user.xp} / {auth.user.next_level_xp} XP</p>
+                                        <p className="text-[10px] text-zinc-400 font-bold">{auth.user.xp} / {auth.gamification.next_level_xp} XP</p>
                                     </div>
                                     <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-                                        <div className="h-full bg-yellow-400" style={{ width: `${auth.user.xp_progress}%` }}></div>
+                                        <div className="h-full bg-yellow-400" style={{ width: `${auth.gamification.xp_progress}%` }}></div>
                                     </div>
                                 </div>
                             </div>
@@ -371,26 +375,26 @@ export default function Dashboard() {
                                         <Users size={16} />
                                         <p className="text-[10px] font-bold uppercase tracking-wider">已推薦人數</p>
                                     </div>
-                                    <p className="text-3xl font-black text-white">{auth.user.referrals_count || 0} <span className="text-sm font-normal text-zinc-500">人</span></p>
+                                    <p className="text-3xl font-black text-white">{auth.referral.referrals_count || 0} <span className="text-sm font-normal text-zinc-500">人</span></p>
                                 </div>
                                 <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
                                     <div className="flex items-center gap-2 text-yellow-400 mb-2">
                                         <Clock size={16} />
                                         <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">待提領獎金</p>
                                     </div>
-                                    <p className="text-3xl font-black text-yellow-400">NT$ {auth.user.pending_commissions || 0}</p>
+                                    <p className="text-3xl font-black text-yellow-400">NT$ {auth.referral.pending_commissions || 0}</p>
                                 </div>
                                 <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
                                     <div className="flex items-center gap-2 text-green-400 mb-2">
                                         <CheckCircle2 size={16} />
                                         <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">累計已發放</p>
                                     </div>
-                                    <p className="text-3xl font-black text-green-400">NT$ {auth.user.total_commissions || 0}</p>
+                                    <p className="text-3xl font-black text-green-400">NT$ {auth.referral.total_commissions || 0}</p>
                                 </div>
                                 <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl flex flex-col justify-center">
                                     <button 
                                         onClick={handleWithdraw}
-                                        disabled={(auth.user.pending_commissions || 0) < 1000}
+                                        disabled={(auth.referral.pending_commissions || 0) < 1000}
                                         className="w-full bg-white text-black py-3 rounded-xl font-bold hover:bg-zinc-200 disabled:opacity-30 transition-all flex items-center justify-center gap-2"
                                     >
                                         <Wallet size={18} /> 申請提領
@@ -411,12 +415,12 @@ export default function Dashboard() {
                                                 <input 
                                                     type="text" 
                                                     readOnly 
-                                                    value={auth.user.referral_link}
+                                                    value={auth.referral.referral_link}
                                                     className="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-300 text-sm outline-none"
                                                 />
                                                 <button 
                                                     onClick={() => {
-                                                        navigator.clipboard.writeText(auth.user.referral_link);
+                                                        navigator.clipboard.writeText(auth.referral.referral_link);
                                                         alert("已複製推薦連結！");
                                                     }}
                                                     className="bg-zinc-800 text-white px-4 py-3 rounded-xl font-bold hover:bg-zinc-700 transition-all"
@@ -428,13 +432,13 @@ export default function Dashboard() {
                                             <div className="flex items-center gap-3 mt-2">
                                                 <p className="text-xs text-zinc-500 font-bold">快速分享：</p>
                                                 <button 
-                                                    onClick={() => window.open(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(auth.user.referral_link)}`)}
+                                                    onClick={() => window.open(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(auth.referral.referral_link)}`)}
                                                     className="w-10 h-10 rounded-full bg-[#00B900] flex items-center justify-center hover:opacity-80 transition-all"
                                                 >
                                                     <span className="text-white font-black text-xs">LINE</span>
                                                 </button>
                                                 <button 
-                                                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(auth.user.referral_link)}`)}
+                                                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(auth.referral.referral_link)}`)}
                                                     className="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center hover:opacity-80 transition-all"
                                                 >
                                                     <span className="text-white font-black text-xs">FB</span>
