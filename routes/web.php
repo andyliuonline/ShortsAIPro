@@ -25,6 +25,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/api/history', [DiscoveryController::class, 'history'])->name('api.history');
     Route::post('/api/publish', [DiscoveryController::class, 'publish'])->name('api.publish');
 
+    // Referral Routes
+    Route::get('/api/referrals', [\App\Http\Controllers\ReferralController::class, 'getReferrals'])->name('api.referrals');
+    Route::post('/api/referrals/bank-info', [\App\Http\Controllers\ReferralController::class, 'updateBankInfo'])->name('api.referrals.bank-info');
+    Route::post('/api/referrals/withdraw', [\App\Http\Controllers\ReferralController::class, 'requestWithdrawal'])->name('api.referrals.withdraw');
+
+    // Gamification Routes
+    Route::get('/api/gamification/stats', [\App\Http\Controllers\GamificationController::class, 'getStats'])->name('api.gamification.stats');
+
     // Google Auth / YouTube Auth
     Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
