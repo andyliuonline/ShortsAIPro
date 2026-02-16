@@ -60,8 +60,22 @@ export default function Welcome({
     return (
         <>
             <Head>
-                <title>ShortsAIPro - 專業級 AI 短影音二創與流量增長工具</title>
-                <meta name="description" content="別再為沒內容煩惱！ShortsAIPro 提供一鍵重製爆紅短影音功能，支援 YouTube、TikTok、Instagram。獨家 AI 視覺去重技術，100% 規避版權限流，助您流量翻倍。" />
+                <title>{t('seo_title')}</title>
+                <meta name="description" content={t('seo_description')} />
+                <meta name="keywords" content={t('seo_keywords')} />
+                {/* Open Graph / Facebook */}
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://www.shortsaipro.com/" />
+                <meta property="og:title" content={t('seo_title')} />
+                <meta property="og:description" content={t('seo_description')} />
+                <meta property="og:image" content="https://www.shortsaipro.com/og-image.jpg" />
+
+                {/* Twitter */}
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:url" content="https://www.shortsaipro.com/" />
+                <meta property="twitter:title" content={t('seo_title')} />
+                <meta property="twitter:description" content={t('seo_description')} />
+                <meta property="twitter:image" content="https://www.shortsaipro.com/og-image.jpg" />
             </Head>
             <div className="bg-zinc-950 text-zinc-50 min-h-screen flex flex-col selection:bg-yellow-400 selection:text-black">
                 {/* Navigation */}

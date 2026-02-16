@@ -90,4 +90,7 @@ return [
     'cta_title' => 'Ready to Build Your Short Video Empire?',
     'cta_btn' => 'Register Now',
     'cta_hint' => 'No credit card required, start for free',
+    'seo_title' => 'ShortsAIPro - Professional AI Short Video Remake & YouTube Growth Tool',
+    'seo_description' => 'Never worry about content again! ShortsAIPro provides one-click viral video remake features, supporting YouTube, TikTok, and Instagram. Exclusive AI visual de-duplication technology to avoid copyright issues.',
+    'seo_keywords' => 'AI short video, YouTube Shorts, TikTok remake, video generation, Sora AI, automated video tools, traffic growth, digital marketing',
 ];

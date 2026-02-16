@@ -90,4 +90,7 @@ return [
     'cta_title' => '準備好建立你的短影音帝國了嗎？',
     'cta_btn' => '我要立即註冊',
     'cta_hint' => '無需信用卡，立即免費試用',
+    'seo_title' => 'ShortsAIPro - 專業級 AI 短影音重製與 YouTube 流量增長工具',
+    'seo_description' => '別再為沒內容煩惱！ShortsAIPro 提供一鍵重製爆紅短影音功能，支援 YouTube、TikTok、Instagram。獨家 AI 視覺去重技術，100% 規避版權限流，助您流量翻倍。',
+    'seo_keywords' => 'AI 短影音, YouTube Shorts, TikTok 搬運, 影片重製, Sora 影片生成, 自動化影片工具, 流量增長, 數位行銷',
 ];
