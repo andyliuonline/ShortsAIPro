@@ -19,9 +19,7 @@ class LocaleMiddleware
         if ($request->session()->has('locale')) {
             App::setLocale($request->session()->get('locale'));
         } else {
-            // Optional: Auto-detect from browser
-            $locale = $request->getPreferredLanguage(['zh_TW', 'en']);
-            App::setLocale($locale ?: config('app.locale'));
+            App::setLocale('zh_TW');
         }
 
         return $next($request);
