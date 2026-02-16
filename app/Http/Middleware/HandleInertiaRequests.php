@@ -45,7 +45,7 @@ class HandleInertiaRequests extends Middleware
                 $authData['referral'] = [
                     'total_commissions' => $user->commissions()->where('status', 'paid')->sum('amount'),
                     'pending_commissions' => $user->commissions()->where('status', 'pending')->sum('amount'),
-                    'referral_link' => route('register', ['ref' => $user->referral_code]),
+                    'referral_link' => config('app.url') . '/register?ref=' . $user->referral_code,
                     'referrals_count' => $user->referrals_count,
                 ];
 
