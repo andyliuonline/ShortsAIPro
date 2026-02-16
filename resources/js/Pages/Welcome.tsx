@@ -13,14 +13,22 @@ import {
     Globe, 
     MessageSquare,
     Youtube,
-    Sparkles
+    Sparkles,
+    Users,
+    Trophy,
+    Award,
+    Gift,
+    Medal
 } from "lucide-react";
 import Pricing from "@/Components/Pricing";
 import LanguageSwitcher from "@/Components/LanguageSwitcher";
+import { useTranslate } from "@/Helpers/useTranslate";
 
 export default function Welcome({
     auth,
 }: PageProps) {
+    const { t } = useTranslate();
+    
     const testimonials = [
         {
             name: "陳小明",
@@ -65,10 +73,10 @@ export default function Welcome({
                                 <span className="text-xl font-bold tracking-tight italic">ShortsAI<span className="text-yellow-400">Pro</span></span>
                             </div>
                             <div className="hidden md:flex items-center gap-8">
-                                <a href="#features" className="text-sm text-zinc-400 hover:text-white transition-colors">功能特性</a>
+                                <a href="#features" className="text-sm text-zinc-400 hover:text-white transition-colors">{t('why_choose_us')}</a>
                                 <a href="#how-it-works" className="text-sm text-zinc-400 hover:text-white transition-colors">運作原理</a>
-                                <a href="#testimonials" className="text-sm text-zinc-400 hover:text-white transition-colors">使用者見證</a>
-                                <a href="#pricing" className="text-sm text-zinc-400 hover:text-white transition-colors">方案定價</a>
+                                <a href="#gamification" className="text-sm text-zinc-400 hover:text-white transition-colors">成長體系</a>
+                                <a href="#pricing" className="text-sm text-zinc-400 hover:text-white transition-colors">{t('pricing')}</a>
                             </div>
                             <div className="flex items-center gap-4">
                                 {auth.user ? (
@@ -76,7 +84,7 @@ export default function Welcome({
                                         href={route('dashboard')}
                                         className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-bold hover:bg-yellow-300 transition-all shadow-[0_0_15px_rgba(250,204,21,0.3)]"
                                     >
-                                        進入主控台
+                                        {t('dashboard')}
                                     </Link>
                                 ) : (
                                     <>
@@ -84,7 +92,7 @@ export default function Welcome({
                                             href={route('login')}
                                             className="text-sm font-medium hover:text-yellow-400 transition-colors"
                                         >
-                                            登入
+                                            {t('login')}
                                         </Link>
                                         <Link
                                             href={route('register')}
@@ -110,12 +118,11 @@ export default function Welcome({
                                 <span>2026 短影音藍海策略：全自動 AI 獲利機器</span>
                             </div>
                             <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-none">
-                                別再為沒內容煩惱。 <br />
-                                <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">一鍵重製爆紅短影音</span>
+                                {t('hero_title_1')} <br />
+                                <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 bg-[length:200%_auto] animate-gradient bg-clip-text text-transparent">{t('hero_title_2')}</span>
                             </h1>
                             <p className="text-zinc-400 text-xl md:text-2xl mb-12 max-w-3xl mx-auto leading-relaxed">
-                                支援 <span className="text-white font-bold">YouTube / TikTok / IG</span> 全平台。獨家 AI 視覺去重技術，
-                                <span className="text-white font-bold"> 100% 規避版權限流，讓流量翻倍。</span>
+                                {t('hero_subtitle')}
                             </p>
                             
                             {/* Mock Input Box for PLG */}
@@ -124,7 +131,7 @@ export default function Welcome({
                                 <div className="relative flex flex-col sm:flex-row gap-2 bg-zinc-900 border border-zinc-800 p-2 rounded-2xl">
                                     <input 
                                         type="text" 
-                                        placeholder="貼上 YouTube 或 TikTok 影片連結..." 
+                                        placeholder={t('search_placeholder')} 
                                         className="flex-grow bg-transparent border-none text-white px-4 py-3 focus:ring-0 outline-none text-lg"
                                         readOnly
                                     />
@@ -132,10 +139,10 @@ export default function Welcome({
                                         href={route('register')}
                                         className="bg-yellow-400 text-black px-8 py-3 rounded-xl font-black hover:bg-yellow-300 transition-all flex items-center justify-center gap-2 whitespace-nowrap"
                                     >
-                                        立即重製 <Sparkles size={20} />
+                                        {t('explore_btn')} <Sparkles size={20} />
                                     </Link>
                                 </div>
-                                <p className="mt-4 text-zinc-500 text-sm">💡 試試貼上任何熱門短片連結，看 AI 如何為你重生內容</p>
+                                <p className="mt-4 text-zinc-500 text-sm">{t('plg_hint')}</p>
                             </div>
 
                             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -175,7 +182,7 @@ export default function Welcome({
                     <section className="py-32 px-4" id="features">
                         <div className="max-w-7xl mx-auto">
                             <div className="text-center mb-20">
-                                <h2 className="text-4xl md:text-5xl font-black mb-6">為什麼選擇 ShortsAIPro？</h2>
+                                <h2 className="text-4xl md:text-5xl font-black mb-6">{t('why_choose_us')}</h2>
                                 <p className="text-zinc-500 text-lg">我們整合了全球最強大的 AI 模型，專為獲利而生。</p>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -186,9 +193,9 @@ export default function Welcome({
                                     <div className="w-14 h-14 rounded-2xl bg-yellow-400/10 flex items-center justify-center mb-8 text-yellow-400">
                                         <TrendingUp size={32} />
                                     </div>
-                                    <h3 className="text-2xl font-bold mb-4">大數據爆紅偵測</h3>
+                                    <h3 className="text-2xl font-bold mb-4">{t('feature_detection_title')}</h3>
                                     <p className="text-zinc-400 leading-relaxed">
-                                        實時監控全球短影音趨勢，自動篩選具備「百萬觀看基因」的影片原型，讓你贏在起跑點。
+                                        {t('feature_detection_desc')}
                                     </p>
                                 </div>
                                 <div className="p-10 rounded-3xl bg-zinc-900/50 border border-zinc-800 hover:border-yellow-400/50 transition-all group relative overflow-hidden">
@@ -198,9 +205,9 @@ export default function Welcome({
                                     <div className="w-14 h-14 rounded-2xl bg-orange-400/10 flex items-center justify-center mb-8 text-orange-400">
                                         <Zap size={32} />
                                     </div>
-                                    <h3 className="text-2xl font-bold mb-4">Sora 級重製技術</h3>
+                                    <h3 className="text-2xl font-bold mb-4">{t('feature_sora_title')}</h3>
                                     <p className="text-zinc-400 leading-relaxed">
-                                        AI 自動分析分鏡邏輯，完美保留爆紅節奏，並以全新視覺效果重製，徹底解決原創度與版權問題。
+                                        {t('feature_sora_desc')}
                                     </p>
                                 </div>
                                 <div className="p-10 rounded-3xl bg-zinc-900/50 border border-zinc-800 hover:border-yellow-400/50 transition-all group relative overflow-hidden">
@@ -210,10 +217,63 @@ export default function Welcome({
                                     <div className="w-14 h-14 rounded-2xl bg-blue-400/10 flex items-center justify-center mb-8 text-blue-400">
                                         <BarChart3 size={32} />
                                     </div>
-                                    <h3 className="text-2xl font-bold mb-4">SEO 自動優化</h3>
+                                    <h3 className="text-2xl font-bold mb-4">{t('feature_seo_title')}</h3>
                                     <p className="text-zinc-400 leading-relaxed">
-                                        Gemini AI 為你撰寫極具吸引力的標題與標籤，並自動同步至 YouTube，打造 24/7 的自動流量機器。
+                                        {t('feature_seo_desc')}
                                     </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Gamification & Referral Section */}
+                    <section className="py-32 px-4 relative overflow-hidden" id="gamification">
+                        <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_90%_10%,rgba(249,115,22,0.05),transparent_50%)]"></div>
+                        <div className="max-w-7xl mx-auto">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                                {/* Gamification */}
+                                <div className="bg-zinc-900/50 border border-zinc-800 p-12 rounded-[3rem] space-y-8 hover:border-orange-500/30 transition-all relative group">
+                                    <div className="w-16 h-16 rounded-2xl bg-orange-500/10 flex items-center justify-center text-orange-500 mb-4">
+                                        <Trophy size={40} />
+                                    </div>
+                                    <h2 className="text-4xl font-black leading-tight">{t('gamification_title')}</h2>
+                                    <p className="text-zinc-400 text-lg leading-relaxed">
+                                        {t('gamification_desc')}
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 flex items-center gap-3">
+                                            <TrendingUp className="text-orange-500" />
+                                            <span className="font-bold text-sm">XP 成長體系</span>
+                                        </div>
+                                        <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 flex items-center gap-3">
+                                            <Medal className="text-yellow-500" />
+                                            <span className="font-bold text-sm">榮譽成就勳章</span>
+                                        </div>
+                                    </div>
+                                    <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-orange-500/10 blur-3xl rounded-full group-hover:bg-orange-500/20 transition-all"></div>
+                                </div>
+
+                                {/* Referral */}
+                                <div className="bg-zinc-900/50 border border-zinc-800 p-12 rounded-[3rem] space-y-8 hover:border-green-500/30 transition-all relative group">
+                                    <div className="w-16 h-16 rounded-2xl bg-green-500/10 flex items-center justify-center text-green-500 mb-4">
+                                        <Gift size={40} />
+                                    </div>
+                                    <h2 className="text-4xl font-black leading-tight">{t('referral_feature_title')}</h2>
+                                    <p className="text-zinc-400 text-lg leading-relaxed">
+                                        {t('referral_feature_desc')}
+                                    </p>
+                                    <div className="flex items-center gap-6 p-6 rounded-3xl bg-zinc-950 border border-zinc-800">
+                                        <div className="flex-1">
+                                            <div className="text-green-500 font-black text-3xl">20%</div>
+                                            <div className="text-zinc-500 text-xs font-bold uppercase tracking-wider">現金分潤</div>
+                                        </div>
+                                        <div className="w-px h-10 bg-zinc-800"></div>
+                                        <div className="flex-1 text-right">
+                                            <div className="text-white font-black text-3xl">+50</div>
+                                            <div className="text-zinc-500 text-xs font-bold uppercase tracking-wider">好友贈送額度</div>
+                                        </div>
+                                    </div>
+                                    <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-green-500/10 blur-3xl rounded-full group-hover:bg-green-500/20 transition-all"></div>
                                 </div>
                             </div>
                         </div>
@@ -224,27 +284,27 @@ export default function Welcome({
                         <div className="max-w-5xl mx-auto px-4">
                             <div className="flex flex-col md:flex-row gap-16 items-center">
                                 <div className="flex-1 space-y-8">
-                                    <h2 className="text-4xl md:text-5xl font-black">只需三步，<br />啟動你的流量工廠</h2>
+                                    <h2 className="text-4xl md:text-5xl font-black">{t('how_it_works')}</h2>
                                     <div className="space-y-6">
                                         <div className="flex gap-4">
                                             <div className="w-8 h-8 rounded-full bg-yellow-400 text-black flex items-center justify-center font-black shrink-0">1</div>
                                             <div>
-                                                <h4 className="text-xl font-bold mb-2">Paste Link</h4>
-                                                <p className="text-zinc-400">貼上你想模仿的爆紅影片連結，或使用大數據推薦原型。</p>
+                                                <h4 className="text-xl font-bold mb-2">{t('step_1_title')}</h4>
+                                                <p className="text-zinc-400">{t('step_1_desc')}</p>
                                             </div>
                                         </div>
                                         <div className="flex gap-4">
                                             <div className="w-8 h-8 rounded-full bg-yellow-400 text-black flex items-center justify-center font-black shrink-0">2</div>
                                             <div>
-                                                <h4 className="text-xl font-bold mb-2">AI Remake</h4>
-                                                <p className="text-zinc-400">一鍵重構視覺幀與音軌，生成 100% 原創的 8K 高清影片。</p>
+                                                <h4 className="text-xl font-bold mb-2">{t('step_2_title')}</h4>
+                                                <p className="text-zinc-400">{t('step_2_desc')}</p>
                                             </div>
                                         </div>
                                         <div className="flex gap-4">
                                             <div className="w-8 h-8 rounded-full bg-yellow-400 text-black flex items-center justify-center font-black shrink-0">3</div>
                                             <div>
-                                                <h4 className="text-xl font-bold mb-2">Go Viral</h4>
-                                                <p className="text-zinc-400">設定自動發布，觀察流量成長。規避平台限流，安全起飛。</p>
+                                                <h4 className="text-xl font-bold mb-2">{t('step_3_title')}</h4>
+                                                <p className="text-zinc-400">{t('step_3_desc')}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -304,15 +364,15 @@ export default function Welcome({
                     {/* FAQ Quick CTA */}
                     <section className="py-20 px-4 bg-yellow-400 text-black">
                         <div className="max-w-4xl mx-auto text-center">
-                            <h2 className="text-4xl font-black mb-8">準備好建立你的短影音帝國了嗎？</h2>
+                            <h2 className="text-4xl font-black mb-8">{t('cta_title')}</h2>
                             <Link 
                                 href={route('register')}
                                 className="inline-block bg-black text-white px-12 py-5 rounded-2xl font-black text-2xl hover:scale-105 active:scale-95 transition-all shadow-2xl"
                             >
-                                我要立即註冊
+                                {t('cta_btn')}
                             </Link>
                             <p className="mt-6 font-bold flex items-center justify-center gap-2">
-                                <CheckCircle2 size={18} /> 無需信用卡，立即免費試用
+                                <CheckCircle2 size={18} /> {t('cta_hint')}
                             </p>
                         </div>
                     </section>
@@ -337,7 +397,7 @@ export default function Welcome({
                                     <li><a href="#" className="hover:text-yellow-400 transition-colors">爆紅偵測器</a></li>
                                     <li><a href="#" className="hover:text-yellow-400 transition-colors">AI 重製工坊</a></li>
                                     <li><a href="#" className="hover:text-yellow-400 transition-colors">自動發布系統</a></li>
-                                    <li><a href="#" className="hover:text-yellow-400 transition-colors">方案定價</a></li>
+                                    <li><a href="#" className="hover:text-yellow-400 transition-colors">{t('pricing')}</a></li>
                                 </ul>
                             </div>
                             <div>
