@@ -31,7 +31,7 @@ export default function Authenticated({
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
-                                    Dashboard
+                                    控制台
                                 </NavLink>
                                 {user.is_admin && (
                                     <NavLink
@@ -75,14 +75,14 @@ export default function Authenticated({
                                         <Dropdown.Link
                                             href={route('profile.edit')}
                                         >
-                                            Profile
+                                            個人資料
                                         </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route('logout')}
                                             method="post"
                                             as="button"
                                         >
-                                            Log Out
+                                            登出
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
@@ -143,7 +143,7 @@ export default function Authenticated({
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
-                            Dashboard
+                            控制台
                         </ResponsiveNavLink>
                         {user.is_admin && (
                             <ResponsiveNavLink
@@ -167,14 +167,14 @@ export default function Authenticated({
 
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink href={route('profile.edit')}>
-                                Profile
+                                個人資料
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
                                 href={route('logout')}
                                 as="button"
                             >
-                                Log Out
+                                登出
                             </ResponsiveNavLink>
                         </div>
                     </div>

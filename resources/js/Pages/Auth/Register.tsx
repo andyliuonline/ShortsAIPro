@@ -26,7 +26,7 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title="註冊帳號" />
 
             {referral_bonus && (
                 <div className="mb-6 p-4 bg-yellow-400/10 border border-yellow-400/20 rounded-xl flex items-center gap-3 animate-bounce">
@@ -42,7 +42,7 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="姓名" />
 
                     <TextInput
                         id="name"
@@ -59,7 +59,7 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="電子信箱" />
 
                     <TextInput
                         id="email"
@@ -76,7 +76,7 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value="密碼" />
 
                     <TextInput
                         id="password"
@@ -95,7 +95,7 @@ export default function Register() {
                 <div className="mt-4">
                     <InputLabel
                         htmlFor="password_confirmation"
-                        value="Confirm Password"
+                        value="確認密碼"
                     />
 
                     <TextInput
@@ -122,11 +122,11 @@ export default function Register() {
                         href={route('login')}
                         className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
                     >
-                        Already registered?
+                        已經有帳號了？
                     </Link>
 
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
+                        註冊
                     </PrimaryButton>
                 </div>
             </form>

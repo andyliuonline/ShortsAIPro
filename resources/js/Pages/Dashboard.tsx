@@ -213,7 +213,7 @@ export default function Dashboard() {
             header={
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                        ShortsAIPro Dashboard
+                        ShortsAIPro 控制台
                     </h2>
                     <div className="flex items-center gap-3">
                         <div className="flex bg-zinc-900 rounded-lg p-1 border border-zinc-800">
