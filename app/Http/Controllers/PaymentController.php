@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ReferralCommission;
 use App\Models\Subscription;
 use App\Services\NewebPayService;
 use App\Services\GivemeInvoiceService;
+use App\Services\GamificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,7 +60,7 @@ class PaymentController extends Controller
         return redirect()->route('dashboard')->with('status', "訂單 {$orderNo} 支付處理中...");
     }
 
-    public function notify(Request $request, NewebPayService $newebpay, GivemeInvoiceService $invoiceService)
+    public function notify(Request $request, NewebPayService $newebpay, GivemeInvoiceService $invoiceService, GamificationService $gamification)
     {
         $tradeInfo = $request->input('TradeInfo');
         $decodedData = $newebpay->decrypt($tradeInfo);
@@ -90,6 +92,28 @@ class PaymentController extends Controller
                     'credits' => $credits[$sub->plan] ?? 0,
                     'credits_reset_at' => now()->addMonth(),
                 ]);
+
+                // Gamification: Award XP for purchase
+                $xpAmount = match($sub->plan) {
+                    'basic' => 300,
+                    'standard' => 600,
+                    'pro' => 1200,
+                    'flagship' => 2000,
+                    default => 0
+                };
+                $gamification->awardXp($user, $xpAmount, "Purchase " . ucfirst($sub->plan) . " Plan");
+
+                // Handle Referral Commission
+                if ($user->referred_by) {
+                    $commissionRate = 0.20; // 20%
+                    ReferralCommission::create([
+                        'referrer_id' => $user->referred_by,
+                        'referred_user_id' => $user->id,
+                        'subscription_id' => $sub->id,
+                        'amount' => $sub->amt * $commissionRate,
+                        'status' => 'pending',
+                    ]);
+                }
 
                 // Issue Invoice via Giveme
                 try {

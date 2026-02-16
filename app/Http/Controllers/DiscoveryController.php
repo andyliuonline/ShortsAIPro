@@ -49,7 +49,7 @@ class DiscoveryController extends Controller
         ]);
     }
 
-    public function generate(Request $request, KieAIService $kie)
+    public function generate(Request $request, KieAIService $kie, \App\Services\GamificationService $gamification)
     {
         $prompt = $request->input('prompt');
         $plan = $request->input('plan');
@@ -69,23 +69,36 @@ class DiscoveryController extends Controller
             'seo_description' => $plan['seoDescription'] ?? null,
         ]);
 
+        // Gamification: Award XP and update streak
+        $user = auth()->user();
+        $gamification->awardXp($user, 10, 'Generate Video');
+        $gamification->updateStreak($user);
+
         return response()->json([
             'success' => true,
             'taskId' => $taskId
         ]);
     }
 
-    public function status(Request $request, KieAIService $kie)
+    public function status(Request $request, KieAIService $kie, \App\Services\GamificationService $gamification)
     {
         $taskId = $request->query('taskId');
         $status = $kie->getTaskStatus($taskId);
 
         // 同步狀態到資料庫
-        \App\Models\RemakeTask::where('task_id', $taskId)->update([
-            'status' => $status['state'],
-            'progress' => $status['progress'],
-            'video_url' => $status['video_url'],
-        ]);
+        $task = \App\Models\RemakeTask::where('task_id', $taskId)->first();
+        if ($task) {
+            $oldStatus = $task->status;
+            $task->update([
+                'status' => $status['state'],
+                'progress' => $status['progress'],
+                'video_url' => $status['video_url'],
+            ]);
+
+            if ($oldStatus !== 'success' && $status['state'] === 'success') {
+                $gamification->checkVideoAchievements($task->user);
+            }
+        }
 
         return response()->json($status);
     }
@@ -99,7 +112,7 @@ class DiscoveryController extends Controller
         return response()->json(['tasks' => $tasks]);
     }
 
-    public function publish(Request $request, YouTubeUploadService $publisher)
+    public function publish(Request $request, YouTubeUploadService $publisher, \App\Services\GamificationService $gamification)
     {
         $videoUrl = $request->input('videoUrl');
         $metadata = $request->input('plan');
@@ -111,6 +124,9 @@ class DiscoveryController extends Controller
                 'description' => $metadata['seoDescription'],
                 'tags' => ['#shorts', '#ai', '#viral']
             ], $taskId);
+
+            // Gamification: Award XP
+            $gamification->awardXp(auth()->user(), 20, 'Publish to YouTube');
 
             return response()->json(['success' => true]);
         } catch (\Exception $e) {

@@ -1,59 +1,46 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ShortsAIPro - AI 爆紅影片重製平台
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+ShortsAIPro 是一個結合 AI 深度分析與全自動影片生成的工具，專為 YouTube 創作者設計。透過分析熱門短影音的「爆紅基因」，利用 Sora/KieAI 技術生成全新的高品質內容。
 
-## About Laravel
+## 🚀 核心功能
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 1. AI 影片分析與重製
+*   **爆紅分析**：串接 YouTube API 獲取熱門影片，由 Gemini AI 深度分析標題、Hook 與視覺腳本。
+*   **高清生成**：利用 Sora 級別的 AI 模型，根據 AI 腳本生成全新的 9:16 短影音。
+*   **一鍵發布**：支援 Google OAuth 授權，生成的影片可一鍵上傳至您的 YouTube 頻道。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 2. 獲利推薦系統 (Referral System)
+*   **分潤機制**：分享您的專屬連結，每筆好友訂閱您都可獲得 **20% 的現金獎金**。
+*   **雙向激勵**：新用戶透過連結註冊可額外獲得 **50 片生成額度**。
+*   **提領管理**：內建銀行收款資訊管理與一鍵提領申請流程（門檻 NT$ 1,000）。
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 3. 遊戲化成長體系 (Gamification)
+*   **創作者等級**：透過產片、發布與推薦獲得 XP 經驗值，升級可獲得免費點數獎勵。
+*   **連續創作火苗**：鼓勵每日創作，達成 7 天連勝可獲得大額點數獎勵。
+*   **創作者名人堂**：全球 Top 10 排行榜，競爭 XP 贏得最高榮譽。
+*   **成就勳章**：收集里程碑勳章，解鎖專屬頭銜與點數紅利。
 
-## Learning Laravel
+### 4. 專業支付與金流
+*   **藍新金流 (NewebPay)**：支援信用卡與多種支付管道。
+*   **雲端發票 (Giveme)**：支付成功後自動開立雲端發票至電子信箱。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🛠 技術棧
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+*   **Backend**: Laravel 11, PHP 8.3
+*   **Frontend**: React, Inertia.js, Tailwind CSS v4, Lucide Icons
+*   **Database**: MySQL
+*   **Integrations**: 
+    *   Google/YouTube OAuth & Data API
+    *   Google Gemini AI API
+    *   KieAI (Sora Video Generation)
+    *   NewebPay (藍新金流)
+    *   Giveme Invoice (電子發票)
 
-## Laravel Sponsors
+## 📦 版本說明
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+*   **v0.5.0** (Current): 加入推薦獎勵系統與遊戲化體系，優化創作者後台介面。
+*   **v0.4.0**: 實作 YouTube 一鍵發布與藍新金流整合。
+*   **v0.3.0**: 串接 KieAI 影片生成與 Gemini 分析引擎。
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+Developed with ❤️ by Andy Liu & Zen Meow AI.

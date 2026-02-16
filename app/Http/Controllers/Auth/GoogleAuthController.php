@@ -30,13 +30,28 @@ class GoogleAuthController extends Controller
 
             if (!$user) {
                 // If not logged in, find or create user by email
-                $user = User::updateOrCreate([
+                $referredBy = null;
+                if (session()->has('referred_by_code')) {
+                    $referrer = User::where('referral_code', session('referred_by_code'))->first();
+                    if ($referrer) {
+                        $referredBy = $referrer->id;
+                    }
+                }
+
+                $user = User::firstOrCreate([
                     'email' => $googleUser->email,
                 ], [
                     'name' => $googleUser->name,
                     'password' => bcrypt(str()->random(16)),
+                    'referred_by' => $referredBy,
                 ]);
+
+                if ($user->wasRecentlyCreated && $referredBy) {
+                    $user->awardReferralBonus();
+                }
+                
                 Auth::login($user);
+                session()->forget('referred_by_code');
             }
 
             // Save tokens to user

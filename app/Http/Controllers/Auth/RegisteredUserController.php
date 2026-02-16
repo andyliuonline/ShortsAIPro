@@ -36,11 +36,26 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $referredBy = null;
+        if (session()->has('referred_by_code')) {
+            $referrer = User::where('referral_code', session('referred_by_code'))->first();
+            if ($referrer) {
+                $referredBy = $referrer->id;
+            }
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'referred_by' => $referredBy,
         ]);
+
+        if ($referredBy) {
+            $user->awardReferralBonus();
+        }
+
+        session()->forget('referred_by_code');
 
         event(new Registered($user));
 

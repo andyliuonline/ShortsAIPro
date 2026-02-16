@@ -3,10 +3,12 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
+import { Gift, Sparkles } from 'lucide-react';
 
 export default function Register() {
+    const { referral_bonus } = usePage<any>().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -25,6 +27,18 @@ export default function Register() {
     return (
         <GuestLayout>
             <Head title="Register" />
+
+            {referral_bonus && (
+                <div className="mb-6 p-4 bg-yellow-400/10 border border-yellow-400/20 rounded-xl flex items-center gap-3 animate-bounce">
+                    <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center text-black shadow-lg">
+                        <Gift size={20} />
+                    </div>
+                    <div>
+                        <p className="text-sm font-black text-yellow-400">推薦獎勵已啟用！</p>
+                        <p className="text-xs text-zinc-400">完成註冊後，您將額外獲得 50 片影片生成額度 <Sparkles size={12} className="inline" /></p>
+                    </div>
+                </div>
+            )}
 
             <form onSubmit={submit}>
                 <div>

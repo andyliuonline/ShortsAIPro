@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/react';
 import { useState, useEffect } from "react";
-import { Zap, Search, Play, Upload, TrendingUp, Loader2, Sparkles, X, CheckCircle2, AlertCircle, Youtube, History, Clock, FileVideo, CreditCard } from "lucide-react";
+import { Zap, Search, Play, Upload, TrendingUp, Loader2, Sparkles, X, CheckCircle2, AlertCircle, Youtube, History, Clock, FileVideo, CreditCard, Users, Gift, Share2, Wallet, Landmark, Trophy, Medal, Award } from "lucide-react";
 import axios from "axios";
 import Pricing from "@/Components/Pricing";
 
@@ -11,6 +11,15 @@ export default function Dashboard() {
     const [videos, setVideos] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     
+    // Referral Data State
+    const [referralData, setReferralData] = useState<any>({ referrals: [], commissions: [] });
+    const [showBankForm, setShowBankForm] = useState(false);
+    const [bankInfo, setBankInfo] = useState({
+        bank_code: auth.user.bank_code || "",
+        bank_account: auth.user.bank_account || "",
+        bank_name: auth.user.bank_name || "",
+    });
+
     // Remake State
     const [selectedVideo, setSelectedVideo] = useState<any>(null);
     const [remakePlan, setRemakePlan] = useState<any>(null);
@@ -23,16 +32,63 @@ export default function Dashboard() {
     
     // History State
     const [history, setHistory] = useState<any[]>([]);
-    const [view, setView] = useState<'search' | 'history' | 'pricing'>('search');
+    const [view, setView] = useState<'search' | 'history' | 'pricing' | 'referral' | 'leaderboard'>('search');
 
-    // Publishing State
-    const [publishing, setPublishing] = useState(false);
-    const [published, setPublished] = useState(false);
+    // Gamification Data State
+    const [gamificationData, setGamificationData] = useState<any>({ leaderboard: [], achievements: [], stats: {} });
 
     // Initial Fetch
     useEffect(() => {
         fetchHistory();
-    }, []);
+        if (new URLSearchParams(window.location.search).get('view') === 'pricing') {
+            setView('pricing');
+        }
+        if (view === 'referral') {
+            fetchReferrals();
+        }
+        if (view === 'leaderboard') {
+            fetchGamificationStats();
+        }
+    }, [view]);
+
+    const fetchGamificationStats = async () => {
+        try {
+            const res = await axios.get('/api/gamification/stats');
+            setGamificationData(res.data);
+        } catch (err) {
+            console.error("Failed to fetch gamification stats");
+        }
+    };
+
+    const fetchReferrals = async () => {
+        try {
+            const res = await axios.get('/api/referrals');
+            setReferralData(res.data);
+        } catch (err) {
+            console.error("Failed to fetch referrals");
+        }
+    };
+
+    const handleUpdateBank = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            await axios.post('/api/referrals/bank-info', bankInfo);
+            alert("銀行資訊已儲存");
+            setShowBankForm(false);
+        } catch (err) {
+            alert("儲存失敗");
+        }
+    };
+
+    const handleWithdraw = async () => {
+        try {
+            const res = await axios.post('/api/referrals/withdraw');
+            alert(res.data.message);
+            fetchReferrals();
+        } catch (err: any) {
+            alert(err.response?.data?.error || "申請失敗");
+        }
+    };
 
     // Status Polling
     useEffect(() => {
@@ -175,6 +231,18 @@ export default function Dashboard() {
                             >
                                 升級方案
                             </button>
+                            <button 
+                                onClick={() => setView('referral')}
+                                className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'referral' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
+                            >
+                                推薦獎金
+                            </button>
+                            <button 
+                                onClick={() => setView('leaderboard')}
+                                className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'leaderboard' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
+                            >
+                                排行榜
+                            </button>
                         </div>
                         
                         {!hasYouTube && (
@@ -194,26 +262,53 @@ export default function Dashboard() {
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     {/* User Status Bar */}
-                    <div className="mb-8 p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-full bg-yellow-400/10 flex items-center justify-center text-yellow-400">
-                                <Zap size={20} />
-                            </div>
-                            <div>
-                                <p className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">目前方案</p>
-                                <p className="text-sm font-bold text-white uppercase">{auth.user.plan || 'Free'}</p>
+                    <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-full bg-yellow-400 flex flex-col items-center justify-center text-black shadow-[0_0_15px_rgba(250,204,21,0.3)]">
+                                    <p className="text-[10px] font-black leading-none uppercase">LV</p>
+                                    <p className="text-xl font-black leading-none">{auth.user.level}</p>
+                                </div>
+                                <div className="flex-1 min-w-[120px]">
+                                    <div className="flex justify-between items-end mb-1">
+                                        <p className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">創作者等級</p>
+                                        <p className="text-[10px] text-zinc-400 font-bold">{auth.user.xp} / {auth.user.next_level_xp} XP</p>
+                                    </div>
+                                    <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                        <div className="h-full bg-yellow-400" style={{ width: `${auth.user.xp_progress}%` }}></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="flex items-center gap-8">
-                            <div className="text-right">
-                                <p className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">剩餘點數</p>
-                                <p className="text-sm font-bold text-yellow-400">{auth.user.credits || 0} 片</p>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${auth.user.streak_count > 0 ? 'bg-orange-500 text-white animate-pulse shadow-[0_0_15px_rgba(249,115,22,0.4)]' : 'bg-zinc-800 text-zinc-500'}`}>
+                                    <TrendingUp size={20} />
+                                </div>
+                                <div>
+                                    <p className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">連續創作</p>
+                                    <p className="text-sm font-bold text-white uppercase">{auth.user.streak_count || 0} 天</p>
+                                </div>
+                            </div>
+                            {auth.user.streak_count >= 7 && <div className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded text-[10px] font-bold">獲得 7 天獎勵</div>}
+                        </div>
+
+                        <div className="p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-yellow-400">
+                                    <Zap size={20} />
+                                </div>
+                                <div>
+                                    <p className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">剩餘點數</p>
+                                    <p className="text-sm font-bold text-white uppercase">{auth.user.credits || 0} 片</p>
+                                </div>
                             </div>
                             <button 
                                 onClick={() => setView('pricing')}
-                                className="bg-yellow-400 text-black px-4 py-2 rounded-lg text-xs font-bold hover:bg-yellow-300"
+                                className="bg-yellow-400 text-black px-4 py-2 rounded-lg text-xs font-bold hover:bg-yellow-300 transition-all"
                             >
-                                儲值點數
+                                儲值
                             </button>
                         </div>
                     </div>
@@ -262,6 +357,256 @@ export default function Dashboard() {
                                 <p className="text-zinc-500">升級方案以解鎖更多影片生成額度與 AI 高級功能</p>
                             </div>
                             <Pricing />
+                        </div>
+                    ) : view === 'referral' ? (
+                        <div className="space-y-8">
+                            <div className="text-center max-w-2xl mx-auto mb-12">
+                                <h3 className="text-4xl font-black text-white mb-4">推廣獲利計畫</h3>
+                                <p className="text-zinc-500">邀請好友加入 ShortsAIPro，每筆訂閱您都可獲得 20% 獎金，好友還能多拿 50 片生成額度！</p>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                                <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
+                                    <div className="flex items-center gap-2 text-zinc-500 mb-2">
+                                        <Users size={16} />
+                                        <p className="text-[10px] font-bold uppercase tracking-wider">已推薦人數</p>
+                                    </div>
+                                    <p className="text-3xl font-black text-white">{auth.user.referrals_count || 0} <span className="text-sm font-normal text-zinc-500">人</span></p>
+                                </div>
+                                <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
+                                    <div className="flex items-center gap-2 text-yellow-400 mb-2">
+                                        <Clock size={16} />
+                                        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">待提領獎金</p>
+                                    </div>
+                                    <p className="text-3xl font-black text-yellow-400">NT$ {auth.user.pending_commissions || 0}</p>
+                                </div>
+                                <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
+                                    <div className="flex items-center gap-2 text-green-400 mb-2">
+                                        <CheckCircle2 size={16} />
+                                        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">累計已發放</p>
+                                    </div>
+                                    <p className="text-3xl font-black text-green-400">NT$ {auth.user.total_commissions || 0}</p>
+                                </div>
+                                <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl flex flex-col justify-center">
+                                    <button 
+                                        onClick={handleWithdraw}
+                                        disabled={(auth.user.pending_commissions || 0) < 1000}
+                                        className="w-full bg-white text-black py-3 rounded-xl font-bold hover:bg-zinc-200 disabled:opacity-30 transition-all flex items-center justify-center gap-2"
+                                    >
+                                        <Wallet size={18} /> 申請提領
+                                    </button>
+                                    <p className="text-[10px] text-zinc-500 mt-2 text-center">門檻 NT$ 1,000</p>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <div className="space-y-6">
+                                    <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl">
+                                        <div className="flex items-center gap-2 mb-6">
+                                            <Share2 className="text-yellow-400" size={20} />
+                                            <h4 className="text-xl font-bold text-white">您的專屬推薦連結</h4>
+                                        </div>
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex gap-2">
+                                                <input 
+                                                    type="text" 
+                                                    readOnly 
+                                                    value={auth.user.referral_link}
+                                                    className="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-zinc-300 text-sm outline-none"
+                                                />
+                                                <button 
+                                                    onClick={() => {
+                                                        navigator.clipboard.writeText(auth.user.referral_link);
+                                                        alert("已複製推薦連結！");
+                                                    }}
+                                                    className="bg-zinc-800 text-white px-4 py-3 rounded-xl font-bold hover:bg-zinc-700 transition-all"
+                                                >
+                                                    複製
+                                                </button>
+                                            </div>
+                                            
+                                            <div className="flex items-center gap-3 mt-2">
+                                                <p className="text-xs text-zinc-500 font-bold">快速分享：</p>
+                                                <button 
+                                                    onClick={() => window.open(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(auth.user.referral_link)}`)}
+                                                    className="w-10 h-10 rounded-full bg-[#00B900] flex items-center justify-center hover:opacity-80 transition-all"
+                                                >
+                                                    <span className="text-white font-black text-xs">LINE</span>
+                                                </button>
+                                                <button 
+                                                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(auth.user.referral_link)}`)}
+                                                    className="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center hover:opacity-80 transition-all"
+                                                >
+                                                    <span className="text-white font-black text-xs">FB</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl">
+                                        <div className="flex items-center justify-between mb-6">
+                                            <div className="flex items-center gap-2">
+                                                <Landmark className="text-blue-400" size={20} />
+                                                <h4 className="text-xl font-bold text-white">銀行收款資訊</h4>
+                                            </div>
+                                            <button 
+                                                onClick={() => setShowBankForm(!showBankForm)}
+                                                className="text-xs text-zinc-500 hover:text-white underline"
+                                            >
+                                                {showBankForm ? '取消' : '修改資訊'}
+                                            </button>
+                                        </div>
+
+                                        {showBankForm ? (
+                                            <form onSubmit={handleUpdateBank} className="space-y-4">
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <div>
+                                                        <label className="text-[10px] uppercase font-bold text-zinc-500 mb-1 block">銀行代碼 (3碼)</label>
+                                                        <input 
+                                                            type="text" 
+                                                            value={bankInfo.bank_code}
+                                                            onChange={e => setBankInfo({...bankInfo, bank_code: e.target.value})}
+                                                            placeholder="例如: 822"
+                                                            className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2 text-white"
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label className="text-[10px] uppercase font-bold text-zinc-500 mb-1 block">分行/銀行名稱</label>
+                                                        <input 
+                                                            type="text" 
+                                                            value={bankInfo.bank_name}
+                                                            onChange={e => setBankInfo({...bankInfo, bank_name: e.target.value})}
+                                                            placeholder="中國信託"
+                                                            className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2 text-white"
+                                                            required
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label className="text-[10px] uppercase font-bold text-zinc-500 mb-1 block">帳號</label>
+                                                    <input 
+                                                        type="text" 
+                                                        value={bankInfo.bank_account}
+                                                        onChange={e => setBankInfo({...bankInfo, bank_account: e.target.value})}
+                                                        placeholder="帳號"
+                                                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2 text-white"
+                                                        required
+                                                    />
+                                                </div>
+                                                <button className="w-full bg-blue-600 hover:bg-blue-500 text-white py-2 rounded-xl font-bold">儲存資訊</button>
+                                            </form>
+                                        ) : (
+                                            <div className="bg-zinc-950 border border-zinc-800 p-4 rounded-xl">
+                                                {auth.user.bank_account ? (
+                                                    <div className="space-y-2">
+                                                        <p className="text-sm text-zinc-300 flex justify-between"><span>銀行:</span> <span className="text-white font-bold">{auth.user.bank_code} {auth.user.bank_name}</span></p>
+                                                        <p className="text-sm text-zinc-300 flex justify-between"><span>帳號:</span> <span className="text-white font-bold">{auth.user.bank_account}</span></p>
+                                                    </div>
+                                                ) : (
+                                                    <p className="text-sm text-zinc-500 italic text-center py-4">尚未設定收款帳戶</p>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl h-full flex flex-col">
+                                    <div className="flex items-center gap-2 mb-6">
+                                        <TrendingUp className="text-green-400" size={20} />
+                                        <h4 className="text-xl font-bold text-white">推薦動態</h4>
+                                    </div>
+                                    
+                                    <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+                                        {referralData.referrals.length > 0 ? referralData.referrals.map((ref: any, idx: number) => (
+                                            <div key={idx} className="flex justify-between items-center p-3 rounded-xl bg-zinc-950 border border-zinc-800">
+                                                <div>
+                                                    <p className="text-sm font-bold text-white">{ref.name}</p>
+                                                    <p className="text-[10px] text-zinc-500">{ref.date}</p>
+                                                </div>
+                                                <span className={`px-2 py-1 rounded text-[10px] font-black uppercase ${ref.status === '已訂閱' ? 'bg-green-500/20 text-green-400' : 'bg-zinc-800 text-zinc-500'}`}>
+                                                    {ref.status}
+                                                </span>
+                                            </div>
+                                        )) : (
+                                            <div className="h-full flex flex-col items-center justify-center text-zinc-600 py-20">
+                                                <Gift size={48} className="mb-4 opacity-20" />
+                                                <p className="text-sm">分享連結，開始賺取被動收入！</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ) : view === 'leaderboard' ? (
+                        <div className="space-y-8">
+                            <div className="text-center max-w-2xl mx-auto mb-12">
+                                <h3 className="text-4xl font-black text-white mb-4">創作者名人堂</h3>
+                                <p className="text-zinc-500">與頂尖創作者競爭，累積 XP 提升等級，解鎖專屬勳章與獎勵！</p>
+                            </div>
+
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                {/* Leaderboard */}
+                                <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+                                    <div className="flex items-center gap-2 mb-8">
+                                        <Trophy className="text-yellow-400" size={24} />
+                                        <h4 className="text-xl font-bold text-white">全球創作者排行 (Top 10)</h4>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        {gamificationData.leaderboard.map((item: any) => (
+                                            <div key={item.rank} className={`flex items-center gap-4 p-4 rounded-2xl border ${item.id === auth.user.id ? 'bg-yellow-400/10 border-yellow-400/30' : 'bg-zinc-950 border-zinc-800'}`}>
+                                                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm ${
+                                                    item.rank === 1 ? 'bg-yellow-400 text-black' :
+                                                    item.rank === 2 ? 'bg-zinc-300 text-black' :
+                                                    item.rank === 3 ? 'bg-orange-400 text-black' : 'text-zinc-500'
+                                                }`}>
+                                                    {item.rank}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <p className="font-bold text-white text-sm">{item.name}</p>
+                                                    <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-wider">LV {item.level} 創作者</p>
+                                                </div>
+                                                <div className="text-right">
+                                                    <p className="text-sm font-black text-white">{item.xp.toLocaleString()} XP</p>
+                                                    <p className="text-[10px] text-zinc-500 font-bold">{item.streak} 天連勝</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Achievements */}
+                                <div className="space-y-8">
+                                    <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl h-full flex flex-col">
+                                        <div className="flex items-center gap-2 mb-8">
+                                            <Award className="text-orange-400" size={24} />
+                                            <h4 className="text-xl font-bold text-white">我的勳章館</h4>
+                                        </div>
+
+                                        <div className="flex-1 space-y-4">
+                                            {gamificationData.achievements.length > 0 ? gamificationData.achievements.map((achievement: any) => (
+                                                <div key={achievement.id} className="group p-4 rounded-2xl bg-zinc-950 border border-zinc-800 hover:border-orange-400/50 transition-all flex items-center gap-4">
+                                                    <div className="w-12 h-12 rounded-xl bg-orange-400/10 flex items-center justify-center text-orange-400 group-hover:scale-110 transition-transform">
+                                                        <Medal size={24} />
+                                                    </div>
+                                                    <div>
+                                                        <p className="font-bold text-white text-sm">{achievement.badge_name}</p>
+                                                        <p className="text-[10px] text-zinc-500 leading-tight">{achievement.description}</p>
+                                                    </div>
+                                                </div>
+                                            )) : (
+                                                <div className="h-full flex flex-col items-center justify-center text-zinc-600 py-20 text-center">
+                                                    <div className="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center mb-4 opacity-20">
+                                                        <Award size={32} />
+                                                    </div>
+                                                    <p className="text-sm">尚未解鎖勳章，<br/>趕快開始您的第一次製作吧！</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     ) : (
                         <div className="flex flex-col gap-8">
