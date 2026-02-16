@@ -43,9 +43,9 @@ class HandleInertiaRequests extends Middleware
                 $prevXp = $gamification->getXpForLevel($user->level);
                 
                 $authData['referral'] = [
-                    'total_commissions' => $user->commissions()->where('status', 'paid')->sum('amount'),
-                    'pending_commissions' => $user->commissions()->where('status', 'pending')->sum('amount'),
-                    'referral_link' => route('register', ['ref' => $user->referral_code]),
+                    'total_commissions' => (float)$user->commissions()->where('status', 'paid')->sum('amount'),
+                    'pending_commissions' => (float)$user->commissions()->where('status', 'pending')->sum('amount'),
+                    'referral_link' => url('/register?ref=' . $user->referral_code),
                     'referrals_count' => $user->referrals_count,
                 ];
 

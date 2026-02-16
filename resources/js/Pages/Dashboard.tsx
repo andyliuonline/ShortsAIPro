@@ -251,21 +251,6 @@ export default function Dashboard() {
                             </button>
                         </div>
                         
-                        <div className="flex bg-zinc-900 rounded-lg p-1 border border-zinc-800">
-                            <button 
-                                onClick={() => axios.post(route('language.switch'), { locale: 'zh_TW' }).then(() => window.location.reload())}
-                                className={`px-2 py-1 rounded text-[10px] font-bold ${locale === 'zh_TW' ? 'bg-zinc-700 text-white' : 'text-zinc-500'}`}
-                            >
-                                中
-                            </button>
-                            <button 
-                                onClick={() => axios.post(route('language.switch'), { locale: 'en' }).then(() => window.location.reload())}
-                                className={`px-2 py-1 rounded text-[10px] font-bold ${locale === 'en' ? 'bg-zinc-700 text-white' : 'text-zinc-500'}`}
-                            >
-                                EN
-                            </button>
-                        </div>
-
                         {!hasYouTube && (
                             <a 
                                 href={route('auth.google.redirect')}
@@ -390,21 +375,21 @@ export default function Dashboard() {
                                 <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
                                     <div className="flex items-center gap-2 text-zinc-500 mb-2">
                                         <Users size={16} />
-                                        <p className="text-[10px] font-bold uppercase tracking-wider">已推薦人數</p>
+                                        <p className="text-[10px] font-bold uppercase tracking-wider">{t('referred_count')}</p>
                                     </div>
-                                    <p className="text-3xl font-black text-white">{auth.referral.referrals_count || 0} <span className="text-sm font-normal text-zinc-500">人</span></p>
+                                    <p className="text-3xl font-black text-white">{auth.referral.referrals_count || 0} <span className="text-sm font-normal text-zinc-500">{t('people_unit')}</span></p>
                                 </div>
                                 <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
                                     <div className="flex items-center gap-2 text-yellow-400 mb-2">
                                         <Clock size={16} />
-                                        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">待提領獎金</p>
+                                        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">{t('pending_commissions')}</p>
                                     </div>
                                     <p className="text-3xl font-black text-yellow-400">NT$ {auth.referral.pending_commissions || 0}</p>
                                 </div>
                                 <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
                                     <div className="flex items-center gap-2 text-green-400 mb-2">
                                         <CheckCircle2 size={16} />
-                                        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">累計已發放</p>
+                                        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">{t('total_commissions')}</p>
                                     </div>
                                     <p className="text-3xl font-black text-green-400">NT$ {auth.referral.total_commissions || 0}</p>
                                 </div>
@@ -414,9 +399,9 @@ export default function Dashboard() {
                                         disabled={(auth.referral.pending_commissions || 0) < 1000}
                                         className="w-full bg-white text-black py-3 rounded-xl font-bold hover:bg-zinc-200 disabled:opacity-30 transition-all flex items-center justify-center gap-2"
                                     >
-                                        <Wallet size={18} /> 申請提領
+                                        <Wallet size={18} /> {t('request_withdrawal')}
                                     </button>
-                                    <p className="text-[10px] text-zinc-500 mt-2 text-center">門檻 NT$ 1,000</p>
+                                    <p className="text-[10px] text-zinc-500 mt-2 text-center">{t('withdrawal_threshold')}</p>
                                 </div>
                             </div>
 

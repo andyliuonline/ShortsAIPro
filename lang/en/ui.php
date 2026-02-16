@@ -58,4 +58,8 @@ return [
     'remember_me' => 'Remember Me',
     'forgot_password' => 'Forgot password?',
     'already_registered' => 'Already registered?',
+    'people_unit' => 'people',
+    'consecutive_creation' => 'Streak',
+    'streak_7_reward' => '7-day Bonus Earned',
+    'free_plan' => 'Free Plan',
 ];

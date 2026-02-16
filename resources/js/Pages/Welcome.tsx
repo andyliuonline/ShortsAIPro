@@ -16,6 +16,7 @@ import {
     Sparkles
 } from "lucide-react";
 import Pricing from "@/Components/Pricing";
+import LanguageSwitcher from "@/Components/LanguageSwitcher";
 
 export default function Welcome({
     auth,
@@ -93,6 +94,7 @@ export default function Welcome({
                                         </Link>
                                     </>
                                 )}
+                                <LanguageSwitcher />
                             </div>
                         </div>
                     </div>

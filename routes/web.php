@@ -16,6 +16,14 @@ Route::get('/', function () {
     ]);
 });
 
+Route::post('/language', function (\Illuminate\Http\Request $request) {
+    $locale = $request->input('locale');
+    if (in_array($locale, ['en', 'zh_TW'])) {
+        session(['locale' => $locale]);
+    }
+    return back();
+})->name('language.switch');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DiscoveryController::class, 'index'])->name('dashboard');
     Route::get('/api/discovery', [DiscoveryController::class, 'search'])->name('api.discovery');
@@ -32,15 +40,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Gamification Routes
     Route::get('/api/gamification/stats', [\App\Http\Controllers\GamificationController::class, 'getStats'])->name('api.gamification.stats');
-
-    // Language Switch
-    Route::post('/language', function (\Illuminate\Http\Request $request) {
-        $locale = $request->input('locale');
-        if (in_array($locale, ['en', 'zh_TW'])) {
-            session(['locale' => $locale]);
-        }
-        return back();
-    })->name('language.switch');
 
     // Google Auth / YouTube Auth
     Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');

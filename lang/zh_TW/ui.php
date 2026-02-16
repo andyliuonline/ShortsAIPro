@@ -58,4 +58,8 @@ return [
     'remember_me' => '記住我',
     'forgot_password' => '忘記密碼？',
     'already_registered' => '已經有帳號了？',
+    'people_unit' => '人',
+    'consecutive_creation' => '連續創作',
+    'streak_7_reward' => '獲得 7 天獎勵',
+    'free_plan' => '免費方案',
 ];
