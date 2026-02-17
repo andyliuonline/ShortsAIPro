@@ -19,9 +19,9 @@ export default function Authenticated({
         useState(false);
 
     return (
-        <div className="min-h-screen bg-[#f8fafc] dark:bg-zinc-950 transition-colors duration-300 relative">
+        <div className="min-h-screen bg-[#f8fafc] dark:bg-zinc-950 transition-colors duration-300 relative overflow-x-hidden">
             {/* Background Ornaments for Light Mode */}
-            <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-60 dark:hidden">
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-60 dark:hidden overflow-hidden">
                 <div className="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] rounded-full bg-blue-200/30 blur-[120px] animate-pulse"></div>
                 <div className="absolute top-[20%] right-[-10%] w-[40%] h-[40%] rounded-full bg-orange-100/40 blur-[100px]"></div>
                 <div className="absolute bottom-[-10%] left-[10%] w-[45%] h-[45%] rounded-full bg-yellow-100/50 blur-[130px]"></div>
