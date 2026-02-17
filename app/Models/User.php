@@ -10,11 +10,18 @@ use App\Models\RemakeTask;
 use App\Models\ReferralCommission;
 use App\Models\UserAchievement;
 use App\Models\WithdrawalRequest;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->is_admin;
+    }
 
     /**
      * The attributes that are mass assignable.
