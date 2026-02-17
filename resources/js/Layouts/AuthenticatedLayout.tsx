@@ -19,14 +19,15 @@ export default function Authenticated({
         useState(false);
 
     return (
-        <div className="min-h-screen bg-[#f8fafc] dark:bg-zinc-950 transition-colors duration-300 relative overflow-hidden">
+        <div className="min-h-screen bg-[#f8fafc] dark:bg-zinc-950 transition-colors duration-300 relative">
             {/* Background Ornaments for Light Mode */}
-            <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40 dark:hidden">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-100 blur-[120px]"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-yellow-100 blur-[120px]"></div>
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-60 dark:hidden">
+                <div className="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] rounded-full bg-blue-200/30 blur-[120px] animate-pulse"></div>
+                <div className="absolute top-[20%] right-[-10%] w-[40%] h-[40%] rounded-full bg-orange-100/40 blur-[100px]"></div>
+                <div className="absolute bottom-[-10%] left-[10%] w-[45%] h-[45%] rounded-full bg-yellow-100/50 blur-[130px]"></div>
             </div>
 
-            <nav className="border-b border-gray-200/50 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl sticky top-0 z-[60] shadow-sm">
+            <nav className="border-b border-gray-200/50 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/80 backdrop-blur-2xl sticky top-0 z-[60] shadow-sm">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">

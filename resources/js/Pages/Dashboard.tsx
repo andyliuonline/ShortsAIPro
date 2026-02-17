@@ -635,7 +635,7 @@ export default function Dashboard() {
 
                                     <div className="relative group max-w-2xl mx-auto">
                                         <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-[2.5rem] blur-2xl opacity-10 group-hover:opacity-25 transition duration-1000"></div>
-                                        <div className="relative flex flex-col sm:flex-row gap-3 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 p-3 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-none">
+                                        <div className="relative flex flex-col sm:flex-row gap-3 bg-white/80 dark:bg-zinc-900/90 border border-gray-100 dark:border-zinc-800 p-3 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl">
                                             <div className="relative flex-1 flex items-center">
                                                 <div className="absolute left-5 text-gray-400 dark:text-zinc-500">
                                                     <Search size={22} />
@@ -650,7 +650,7 @@ export default function Dashboard() {
                                                 />
                                                 <button 
                                                     onClick={() => setShowFilters(!showFilters)}
-                                                    className={`absolute right-3 p-3 rounded-2xl transition-all ${showFilters ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/30' : 'text-gray-400 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white'}`}
+                                                    className={`absolute right-3 p-3 rounded-2xl transition-all ${showFilters ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/30 scale-105' : 'text-gray-400 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white'}`}
                                                 >
                                                     <Filter size={22} />
                                                 </button>
@@ -658,14 +658,14 @@ export default function Dashboard() {
                                             <button 
                                                 onClick={handleSearch}
                                                 disabled={loading}
-                                                className="bg-gray-900 dark:bg-yellow-400 text-white dark:text-black px-10 py-4 rounded-[1.5rem] font-black hover:bg-black dark:hover:bg-yellow-300 transition-all flex items-center justify-center gap-3 shadow-xl shadow-gray-200 dark:shadow-yellow-400/20 disabled:opacity-50 min-w-[180px] group-hover:translate-y-[-2px] active:scale-95"
+                                                className="bg-gradient-to-br from-yellow-400 to-orange-500 text-black px-10 py-4 rounded-[1.5rem] font-black hover:scale-[1.02] transition-all flex items-center justify-center gap-3 shadow-xl shadow-yellow-400/20 disabled:opacity-50 min-w-[180px] active:scale-95"
                                             >
                                                 {loading ? <Loader2 className="animate-spin" size={22} /> : <>{t('start_exploring')} <Play size={20} fill="currentColor" className="group-hover:translate-x-1 transition-transform" /></>}
                                             </button>
                                         </div>
 
                                         {showFilters && (
-                                            <div className="absolute top-full left-0 right-0 mt-6 bg-white/90 dark:bg-zinc-900/90 border border-gray-100 dark:border-zinc-800 rounded-[2.5rem] p-8 grid grid-cols-1 sm:grid-cols-2 gap-8 shadow-[0_30px_60px_rgba(0,0,0,0.1)] backdrop-blur-xl z-50 animate-in fade-in slide-in-from-top-6 duration-300">
+                                            <div className="relative mt-8 bg-white/60 dark:bg-zinc-900/60 border border-white dark:border-zinc-800 rounded-[2.5rem] p-8 grid grid-cols-1 sm:grid-cols-2 gap-8 shadow-xl backdrop-blur-2xl z-50 animate-in fade-in slide-in-from-top-6 duration-500">
                                                 <div className="space-y-4 text-left">
                                                     <label className="text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.3em] flex items-center gap-2">
                                                         <TrendingUp size={14} className="text-yellow-500" /> 排序方式
@@ -680,7 +680,7 @@ export default function Dashboard() {
                                                             <button
                                                                 key={opt.id}
                                                                 onClick={() => setOrder(opt.id)}
-                                                                className={`px-4 py-3 rounded-2xl text-xs font-black border transition-all ${order === opt.id ? 'bg-yellow-400 text-black border-yellow-400 shadow-lg shadow-yellow-400/20' : 'bg-gray-50 dark:bg-zinc-950 border-transparent text-gray-400 dark:text-zinc-500 hover:border-gray-200 dark:hover:border-zinc-700 hover:text-gray-600'}`}
+                                                                className={`px-4 py-3 rounded-2xl text-xs font-black border transition-all ${order === opt.id ? 'bg-yellow-400 text-black border-yellow-400 shadow-lg shadow-yellow-400/20' : 'bg-white/50 dark:bg-zinc-950 border-gray-100 dark:border-zinc-800 text-gray-400 dark:text-zinc-500 hover:border-gray-200 dark:hover:border-zinc-700 hover:text-gray-600'}`}
                                                             >
                                                                 {opt.label}
                                                             </button>
@@ -701,7 +701,7 @@ export default function Dashboard() {
                                                             <button
                                                                 key={opt.id}
                                                                 onClick={() => setLanguage(opt.id)}
-                                                                className={`px-4 py-3 rounded-2xl text-xs font-black border transition-all ${language === opt.id ? 'bg-yellow-400 text-black border-yellow-400 shadow-lg shadow-yellow-400/20' : 'bg-gray-50 dark:bg-zinc-950 border-transparent text-gray-400 dark:text-zinc-500 hover:border-gray-200 dark:hover:border-zinc-700 hover:text-gray-600'}`}
+                                                                className={`px-4 py-3 rounded-2xl text-xs font-black border transition-all ${language === opt.id ? 'bg-yellow-400 text-black border-yellow-400 shadow-lg shadow-yellow-400/20' : 'bg-white/50 dark:bg-zinc-950 border-transparent text-gray-400 dark:text-zinc-500 hover:border-gray-200 dark:hover:border-zinc-700 hover:text-gray-600'}`}
                                                             >
                                                                 {opt.label}
                                                             </button>
