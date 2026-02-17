@@ -602,27 +602,27 @@ export default function Dashboard() {
                             </div>
                         </div>
                     ) : (
-                        <div className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-4">
                             {/* Prominent Search Section */}
-                            <div className="py-12 px-6 relative text-center rounded-[3.5rem] bg-white/40 dark:bg-transparent border border-white dark:border-transparent shadow-xl shadow-gray-200/50 dark:shadow-none backdrop-blur-sm">
+                            <div className="py-8 px-6 relative text-center rounded-[3.5rem] bg-white/40 dark:bg-transparent border border-white dark:border-transparent shadow-xl shadow-gray-200/50 dark:shadow-none backdrop-blur-sm">
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.15),transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.05),transparent_70%)] pointer-events-none rounded-[3.5rem] overflow-hidden"></div>
                                 
                                 <div className="max-w-3xl mx-auto relative z-10">
-                                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-600 dark:text-yellow-400 text-[10px] font-black uppercase tracking-[0.2em] mb-6 shadow-sm">
-                                        <Sparkles size={12} className="fill-current animate-pulse" />
+                                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-600 dark:text-yellow-400 text-xs font-black uppercase tracking-[0.2em] mb-6 shadow-sm">
+                                        <Sparkles size={14} className="fill-current animate-pulse" />
                                         <span>AI 爆紅影片偵測器</span>
                                     </div>
-                                    <h3 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-4 tracking-tighter leading-tight">
+                                    <h3 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-4 tracking-tighter leading-tight">
                                         搜尋您的 <span className="bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 dark:from-yellow-400 dark:to-orange-500 bg-clip-text text-transparent">流量密碼</span>
                                     </h3>
-                                    <p className="text-gray-500 dark:text-zinc-500 text-base mb-10 max-w-xl mx-auto leading-relaxed font-medium opacity-90">輸入關鍵字，讓 AI 從 YouTube 海量數據中精選出最具重製潛力的爆紅素材。</p>
+                                    <p className="text-gray-500 dark:text-zinc-500 text-sm mb-10 max-w-xl mx-auto leading-relaxed font-medium opacity-90">輸入關鍵字，讓 AI 從 YouTube 海量數據中精選出最具重製潛力的爆紅素材。</p>
 
                                     <div className="relative group max-w-2xl mx-auto">
                                         <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-[2.5rem] blur-2xl opacity-10 group-hover:opacity-25 transition duration-1000"></div>
-                                        <div className="relative flex flex-col sm:flex-row gap-3 bg-white/80 dark:bg-zinc-900/90 border border-gray-100 dark:border-zinc-800 p-2.5 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl">
+                                        <div className="relative flex flex-col sm:flex-row gap-2 bg-white/80 dark:bg-zinc-900/90 border border-gray-100 dark:border-zinc-800 p-2 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl">
                                             <div className="relative flex-1 flex items-center">
                                                 <div className="absolute left-5 text-gray-400 dark:text-zinc-500">
-                                                    <Search size={22} />
+                                                    <Search size={20} />
                                                 </div>
                                                 <input 
                                                     type="text" 
@@ -630,21 +630,21 @@ export default function Dashboard() {
                                                     onChange={(e) => setSearchQuery(e.target.value)}
                                                     onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                                                     placeholder={t('search_placeholder')} 
-                                                    className="w-full bg-transparent border-none text-gray-900 dark:text-white pl-14 pr-14 py-3.5 text-lg focus:ring-0 outline-none placeholder:text-gray-300 dark:placeholder:text-zinc-600 font-bold"
+                                                    className="w-full bg-transparent border-none text-gray-900 dark:text-white pl-12 pr-12 py-2.5 text-lg focus:ring-0 outline-none placeholder:text-gray-300 dark:placeholder:text-zinc-600 font-bold"
                                                 />
                                                 <button 
                                                     onClick={() => setShowFilters(!showFilters)}
-                                                    className={`absolute right-3 p-3 rounded-2xl transition-all ${showFilters ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/30 scale-105' : 'text-gray-400 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white'}`}
+                                                    className={`absolute right-3 p-2 rounded-2xl transition-all ${showFilters ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/30 scale-105' : 'text-gray-400 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white'}`}
                                                 >
-                                                    <Filter size={22} />
+                                                    <Filter size={20} />
                                                 </button>
                                             </div>
                                             <button 
                                                 onClick={handleSearch}
                                                 disabled={loading}
-                                                className="bg-gradient-to-br from-yellow-400 to-orange-500 text-black px-10 py-3.5 rounded-[1.5rem] font-black hover:scale-[1.02] transition-all flex items-center justify-center gap-3 shadow-xl shadow-yellow-400/20 disabled:opacity-50 min-w-[170px] active:scale-95"
+                                                className="bg-gradient-to-br from-yellow-400 to-orange-500 text-black px-8 py-2.5 rounded-[1.5rem] font-black hover:scale-[1.02] transition-all flex items-center justify-center gap-3 shadow-xl shadow-yellow-400/20 disabled:opacity-50 min-w-[150px] active:scale-95"
                                             >
-                                                {loading ? <Loader2 className="animate-spin" size={22} /> : <>{t('start_exploring')} <Play size={18} fill="currentColor" className="group-hover:translate-x-1 transition-transform" /></>}
+                                                {loading ? <Loader2 className="animate-spin" size={20} /> : <>{t('start_exploring')} <Play size={16} fill="currentColor" className="group-hover:translate-x-1 transition-transform" /></>}
                                             </button>
                                         </div>
 
