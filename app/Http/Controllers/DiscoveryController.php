@@ -21,7 +21,10 @@ class DiscoveryController extends Controller
     public function search(Request $request, YouTubeService $youtube)
     {
         $query = $request->query('q', 'trending shorts');
-        $videos = $youtube->searchShorts($query);
+        $order = $request->query('order', 'relevance');
+        $language = $request->query('language', 'zh-Hant');
+        
+        $videos = $youtube->searchShorts($query, 12, $order, $language);
         
         return response()->json(['videos' => $videos]);
     }

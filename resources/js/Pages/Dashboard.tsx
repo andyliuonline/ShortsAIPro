@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/react';
 import { useState, useEffect } from "react";
-import { Zap, Search, Play, Upload, TrendingUp, Loader2, Sparkles, X, CheckCircle2, AlertCircle, Youtube, History, Clock, FileVideo, CreditCard, Users, Gift, Share2, Wallet, Landmark, Trophy, Medal, Award } from "lucide-react";
+import { Zap, Search, Play, Upload, TrendingUp, Loader2, Sparkles, X, CheckCircle2, AlertCircle, Youtube, History, Clock, FileVideo, CreditCard, Users, Gift, Share2, Wallet, Landmark, Trophy, Medal, Award, Filter, Globe, ChevronDown } from "lucide-react";
 import axios from "axios";
 import Pricing from "@/Components/Pricing";
 import { useTranslate } from "@/Helpers/useTranslate";
@@ -10,6 +10,9 @@ export default function Dashboard() {
     const { auth, hasYouTube, locale } = usePage<any>().props;
     const { t } = useTranslate();
     const [searchQuery, setSearchQuery] = useState("");
+    const [order, setOrder] = useState("relevance");
+    const [language, setLanguage] = useState("zh-Hant");
+    const [showFilters, setShowFilters] = useState(false);
     const [videos, setVideos] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     
@@ -130,7 +133,7 @@ export default function Dashboard() {
         if (!searchQuery) return;
         setLoading(true);
         try {
-            const res = await axios.get(`/api/discovery?q=${encodeURIComponent(searchQuery)}`);
+            const res = await axios.get(`/api/discovery?q=${encodeURIComponent(searchQuery)}&order=${order}&language=${language}`);
             setVideos(res.data.videos || []);
         } catch (err: any) {
             console.error("Search failed:", err);
@@ -617,27 +620,82 @@ export default function Dashboard() {
                     ) : (
                         <div className="flex flex-col gap-8">
                             {/* Search Bar */}
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                                <div className="relative w-full max-w-xl">
-                                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                                        <Search className="text-zinc-500" size={18} />
+                            <div className="flex flex-col gap-4 items-center">
+                                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-3xl">
+                                    <div className="relative flex-1 w-full">
+                                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                                            <Search className="text-zinc-500" size={18} />
+                                        </div>
+                                        <input 
+                                            type="text" 
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                                            placeholder={t('search_placeholder')} 
+                                            className="w-full bg-zinc-900 border border-zinc-700 rounded-xl py-4 pl-10 pr-4 text-white focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 transition-all outline-none"
+                                        />
+                                        <button 
+                                            onClick={() => setShowFilters(!showFilters)}
+                                            className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg transition-colors ${showFilters ? 'bg-yellow-400 text-black' : 'text-zinc-500 hover:bg-zinc-800'}`}
+                                        >
+                                            <Filter size={18} />
+                                        </button>
                                     </div>
-                                    <input 
-                                        type="text" 
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                                        placeholder={t('search_placeholder')} 
-                                        className="w-full bg-zinc-900 border border-zinc-700 rounded-xl py-4 pl-10 pr-4 text-white focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 transition-all outline-none"
-                                    />
+                                    <button 
+                                        onClick={handleSearch}
+                                        disabled={loading}
+                                        className="w-full sm:w-auto bg-yellow-400 text-black px-8 py-4 rounded-xl font-bold hover:bg-yellow-300 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                                    >
+                                        {loading ? <Loader2 className="animate-spin" size={18} /> : <>{t('start_exploring')} <Play size={18} /></>}
+                                    </button>
                                 </div>
-                                <button 
-                                    onClick={handleSearch}
-                                    disabled={loading}
-                                    className="w-full sm:w-auto bg-yellow-400 text-black px-8 py-4 rounded-xl font-bold hover:bg-yellow-300 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                                >
-                                    {loading ? <Loader2 className="animate-spin" size={18} /> : <>{t('start_exploring')} <Play size={18} /></>}
-                                </button>
+
+                                {showFilters && (
+                                    <div className="w-full max-w-3xl bg-zinc-900 border border-zinc-800 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 animate-in slide-in-from-top-2 duration-200">
+                                        <div className="space-y-2 text-left">
+                                            <label className="text-[10px] uppercase font-bold text-zinc-500 tracking-widest flex items-center gap-2">
+                                                <TrendingUp size={12} /> 排序方式
+                                            </label>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {[
+                                                    { id: 'relevance', label: '相關性' },
+                                                    { id: 'date', label: '最新上傳' },
+                                                    { id: 'viewCount', label: '觀看次數' },
+                                                    { id: 'rating', label: '評分高低' }
+                                                ].map((opt) => (
+                                                    <button
+                                                        key={opt.id}
+                                                        onClick={() => setOrder(opt.id)}
+                                                        className={`px-3 py-2 rounded-lg text-xs font-bold border transition-all ${order === opt.id ? 'bg-yellow-400/10 border-yellow-400 text-yellow-400' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
+                                                    >
+                                                        {opt.label}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2 text-left">
+                                            <label className="text-[10px] uppercase font-bold text-zinc-500 tracking-widest flex items-center gap-2">
+                                                <Globe size={12} /> 語言設定
+                                            </label>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {[
+                                                    { id: 'zh-Hant', label: '繁體中文' },
+                                                    { id: 'zh-Hans', label: '簡體中文' },
+                                                    { id: 'en', label: '英文' },
+                                                    { id: 'all', label: '不限語言' }
+                                                ].map((opt) => (
+                                                    <button
+                                                        key={opt.id}
+                                                        onClick={() => setLanguage(opt.id)}
+                                                        className={`px-3 py-2 rounded-lg text-xs font-bold border transition-all ${language === opt.id ? 'bg-yellow-400/10 border-yellow-400 text-yellow-400' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
+                                                    >
+                                                        {opt.label}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Discovery Results */}

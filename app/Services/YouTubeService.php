@@ -15,9 +15,9 @@ class YouTubeService
         $this->apiKey = config('services.youtube.key');
     }
 
-    public function searchShorts(string $query, int $maxResults = 12)
+    public function searchShorts(string $query, int $maxResults = 12, string $order = 'relevance', string $language = 'zh-Hant')
     {
-        $queryHash = md5($query . '_' . $maxResults);
+        $queryHash = md5($query . '_' . $maxResults . '_' . $order . '_' . $language);
 
         // Check Cache
         $cache = YoutubeCache::where('query_hash', $queryHash)
@@ -28,16 +28,21 @@ class YouTubeService
             return collect($cache->results);
         }
 
-        $response = Http::get('https://www.googleapis.com/youtube/v3/search', [
+        $params = [
             'key' => $this->apiKey,
             'part' => 'snippet',
             'q' => $query . ' #shorts',
             'type' => 'video',
             'videoDuration' => 'short',
             'maxResults' => $maxResults,
-            'relevanceLanguage' => 'zh-Hant',
-            'order' => 'relevance',
-        ]);
+            'order' => $order,
+        ];
+
+        if ($language !== 'all') {
+            $params['relevanceLanguage'] = $language;
+        }
+
+        $response = Http::get('https://www.googleapis.com/youtube/v3/search', $params);
 
         if ($response->failed()) {
             throw new \Exception('YouTube API Error: ' . ($response->json()['error']['message'] ?? 'Unknown error'));
