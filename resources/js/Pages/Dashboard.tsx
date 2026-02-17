@@ -215,66 +215,59 @@ export default function Dashboard() {
 
     return (
         <AuthenticatedLayout
-            header={
-                <div className="flex justify-between items-center">
-                    <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                        {t('dashboard_title')}
-                    </h2>
-                    <div className="flex items-center gap-3">
-                        <div className="flex bg-gray-100 dark:bg-zinc-900 rounded-xl p-1 border border-gray-200 dark:border-zinc-800 shadow-inner">
-                            <button 
-                                onClick={() => setView('search')}
-                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'search' ? 'bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
-                            >
-                                {t('search_videos')}
-                            </button>
-                            <button 
-                                onClick={() => setView('history')}
-                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'history' ? 'bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
-                            >
-                                {t('history')}
-                            </button>
-                            <button 
-                                onClick={() => setView('pricing')}
-                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'pricing' ? 'bg-yellow-400 text-black shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
-                            >
-                                {t('pricing')}
-                            </button>
-                            <button 
-                                onClick={() => setView('referral')}
-                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'referral' ? 'bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
-                            >
-                                {t('referral')}
-                            </button>
-                            <button 
-                                onClick={() => setView('leaderboard')}
-                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'leaderboard' ? 'bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
-                            >
-                                {t('leaderboard')}
-                            </button>
-                            <button 
-                                onClick={() => setView('achievements')}
-                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'achievements' ? 'bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
-                            >
-                                個人成就
-                            </button>
-                        </div>
-                        
-                        {!hasYouTube && (
-                            <a 
-                                href={route('auth.google.redirect')}
-                                className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all"
-                            >
-                                <Youtube size={18} /> {t('connect_youtube')}
-                            </a>
-                        )}
-                    </div>
+            navExtension={
+                <div className="flex items-center gap-1 sm:ms-6">
+                    <button 
+                        onClick={() => setView('search')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all ${view === 'search' ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' : 'text-gray-500 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800'}`}
+                    >
+                        {t('search_videos')}
+                    </button>
+                    <button 
+                        onClick={() => setView('history')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all ${view === 'history' ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' : 'text-gray-500 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800'}`}
+                    >
+                        {t('history')}
+                    </button>
+                    <button 
+                        onClick={() => setView('pricing')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all ${view === 'pricing' ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' : 'text-gray-500 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800'}`}
+                    >
+                        {t('pricing')}
+                    </button>
+                    <button 
+                        onClick={() => setView('referral')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all ${view === 'referral' ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' : 'text-gray-500 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800'}`}
+                    >
+                        {t('referral')}
+                    </button>
+                    <button 
+                        onClick={() => setView('leaderboard')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all ${view === 'leaderboard' ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' : 'text-gray-500 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800'}`}
+                    >
+                        {t('leaderboard')}
+                    </button>
+                    <button 
+                        onClick={() => setView('achievements')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all ${view === 'achievements' ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' : 'text-gray-500 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800'}`}
+                    >
+                        個人成就
+                    </button>
+                    
+                    {!hasYouTube && (
+                        <a 
+                            href={route('auth.google.redirect')}
+                            className="ms-4 flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-black transition-all shadow-lg shadow-red-600/20"
+                        >
+                            <Youtube size={14} /> {t('connect_youtube')}
+                        </a>
+                    )}
                 </div>
             }
         >
             <Head title="Dashboard" />
 
-            <div className="py-12">
+            <div className="py-6">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     {view === 'history' ? (
                         <div className="space-y-6">

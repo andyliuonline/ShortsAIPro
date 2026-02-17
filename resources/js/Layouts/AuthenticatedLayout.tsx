@@ -11,7 +11,8 @@ import { useTranslate } from "@/Helpers/useTranslate";
 export default function Authenticated({
     header,
     children,
-}: PropsWithChildren<{ header?: ReactNode }>) {
+    navExtension,
+}: PropsWithChildren<{ header?: ReactNode; navExtension?: ReactNode }>) {
     const user = usePage().props.auth.user;
     const { t } = useTranslate();
 
@@ -44,6 +45,7 @@ export default function Authenticated({
                                 >
                                     {t('dashboard')}
                                 </NavLink>
+                                {navExtension}
                             </div>
                         </div>
 
@@ -153,6 +155,7 @@ export default function Authenticated({
                         >
                             {t('dashboard')}
                         </ResponsiveNavLink>
+                        {navExtension}
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
