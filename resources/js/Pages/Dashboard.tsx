@@ -620,8 +620,8 @@ export default function Dashboard() {
                     ) : (
                         <div className="flex flex-col gap-10">
                             {/* Prominent Search Section */}
-                            <div className="py-16 px-6 relative overflow-hidden text-center rounded-[4rem] bg-white/40 dark:bg-transparent border border-white dark:border-transparent shadow-2xl shadow-gray-200/50 dark:shadow-none backdrop-blur-sm">
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.15),transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.05),transparent_70%)] pointer-events-none"></div>
+                            <div className="py-16 px-6 relative text-center rounded-[4rem] bg-white/40 dark:bg-transparent border border-white dark:border-transparent shadow-2xl shadow-gray-200/50 dark:shadow-none backdrop-blur-sm">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.15),transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.05),transparent_70%)] pointer-events-none rounded-[4rem] overflow-hidden"></div>
                                 
                                 <div className="max-w-3xl mx-auto relative z-10">
                                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-600 dark:text-yellow-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8 shadow-sm">
