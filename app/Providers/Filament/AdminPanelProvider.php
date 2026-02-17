@@ -32,6 +32,12 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->sidebarCollapsibleOnDesktop()
+            ->navigationItems([
+                \Filament\Navigation\NavigationItem::make('回到使用者中心')
+                    ->url('/dashboard')
+                    ->icon('heroicon-o-arrow-left-on-rectangle')
+                    ->sort(-1),
+            ])
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->pages([
