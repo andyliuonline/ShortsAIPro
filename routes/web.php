@@ -49,7 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/payment/checkout', [\App\Http\Controllers\PaymentController::class, 'checkout'])->name('payment.checkout');
 
     // Admin Routes
-    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::middleware('admin')->prefix('panel')->name('admin.')->group(function () {
         Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/users', [\App\Http\Controllers\Admin\AdminController::class, 'users'])->name('users');
         Route::post('/users/{user}/plan', [\App\Http\Controllers\Admin\AdminController::class, 'updateUserPlan'])->name('users.update-plan');
