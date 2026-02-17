@@ -17,7 +17,13 @@ class WithdrawalRequestResource extends Resource
 {
     protected static ?string $model = WithdrawalRequest::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+
+    protected static ?string $navigationLabel = '提領審核';
+
+    protected static ?string $modelLabel = '提領申請';
+
+    protected static ?string $pluralModelLabel = '提領審核';
 
     public static function form(Form $form): Form
     {

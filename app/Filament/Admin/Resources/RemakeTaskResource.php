@@ -17,7 +17,13 @@ class RemakeTaskResource extends Resource
 {
     protected static ?string $model = RemakeTask::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-video-camera';
+
+    protected static ?string $navigationLabel = '任務監控';
+
+    protected static ?string $modelLabel = '生成任務';
+
+    protected static ?string $pluralModelLabel = '任務監控';
 
     public static function form(Form $form): Form
     {
