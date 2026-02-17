@@ -23,7 +23,14 @@ class RemakeTaskResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->required(),
+                Forms\Components\TextInput::make('status')->required(),
+                Forms\Components\TextInput::make('progress')->numeric(),
+                Forms\Components\TextInput::make('original_title'),
+                Forms\Components\Textarea::make('visual_prompt'),
             ]);
     }
 
@@ -31,7 +38,11 @@ class RemakeTaskResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('user.name')->searchable(),
+                Tables\Columns\TextColumn::make('status')->badge(),
+                Tables\Columns\TextColumn::make('progress')->suffix('%'),
+                Tables\Columns\TextColumn::make('original_title')->limit(30),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->filters([
                 //

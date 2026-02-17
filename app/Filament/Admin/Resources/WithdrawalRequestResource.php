@@ -23,7 +23,17 @@ class WithdrawalRequestResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->required(),
+                Forms\Components\TextInput::make('amount')->numeric()->required(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'approved' => 'Approved',
+                        'rejected' => 'Rejected',
+                    ])->required(),
+                Forms\Components\Textarea::make('admin_note'),
             ]);
     }
 
@@ -31,7 +41,16 @@ class WithdrawalRequestResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('user.name')->searchable(),
+                Tables\Columns\TextColumn::make('amount')->money('TWD')->sortable(),
+                Tables\Columns\TextColumn::make('status')->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'approved' => 'success',
+                        'pending' => 'warning',
+                        'rejected' => 'danger',
+                        default => 'gray',
+                    }),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->filters([
                 //

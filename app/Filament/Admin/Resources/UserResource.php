@@ -23,7 +23,18 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('email')->email()->required(),
+                Forms\Components\Toggle::make('is_admin'),
+                Forms\Components\Select::make('plan')
+                    ->options([
+                        'free' => 'Free',
+                        'basic' => 'Basic',
+                        'standard' => 'Standard',
+                        'pro' => 'Pro',
+                        'flagship' => 'Flagship',
+                    ]),
+                Forms\Components\TextInput::make('credits')->numeric(),
             ]);
     }
 
@@ -31,7 +42,13 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id')->sortable(),
+                Tables\Columns\TextColumn::make('name')->searchable(),
+                Tables\Columns\TextColumn::make('email')->searchable(),
+                Tables\Columns\IconColumn::make('is_admin')->boolean(),
+                Tables\Columns\TextColumn::make('plan')->badge(),
+                Tables\Columns\TextColumn::make('credits')->sortable(),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->filters([
                 //

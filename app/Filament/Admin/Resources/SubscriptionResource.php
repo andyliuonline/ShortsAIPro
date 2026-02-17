@@ -23,7 +23,14 @@ class SubscriptionResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->required(),
+                Forms\Components\TextInput::make('plan')->required(),
+                Forms\Components\TextInput::make('amt')->numeric()->required(),
+                Forms\Components\TextInput::make('status')->required(),
+                Forms\Components\DateTimePicker::make('paid_at'),
             ]);
     }
 
@@ -31,7 +38,17 @@ class SubscriptionResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('user.name')->searchable(),
+                Tables\Columns\TextColumn::make('plan')->badge(),
+                Tables\Columns\TextColumn::make('amt')->money('TWD')->sortable(),
+                Tables\Columns\TextColumn::make('status')->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'paid' => 'success',
+                        'pending' => 'warning',
+                        'failed' => 'danger',
+                        default => 'gray',
+                    }),
+                Tables\Columns\TextColumn::make('paid_at')->dateTime()->sortable(),
             ])
             ->filters([
                 //
