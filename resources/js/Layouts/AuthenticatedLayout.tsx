@@ -38,7 +38,7 @@ export default function Authenticated({
                                 </NavLink>
                                 {user.is_admin && (
                                     <NavLink
-                                        href={route('admin.dashboard')}
+                                        href="/admin"
                                         active={route().current('admin.*')}
                                     >
                                         {t('admin_dashboard')}
@@ -151,7 +151,7 @@ export default function Authenticated({
                         </ResponsiveNavLink>
                         {user.is_admin && (
                             <ResponsiveNavLink
-                                href={route('admin.dashboard')}
+                                href="/admin"
                                 active={route().current('admin.*')}
                             >
                                 {t('admin_dashboard')}
