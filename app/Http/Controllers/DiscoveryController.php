@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\YouTubeService;
-use App\Services\GeminiService;
+use App\Services\MiniMaxService;
 use App\Services\KieAIService;
 use App\Services\YouTubeUploadService;
 use Illuminate\Http\Request;
@@ -26,7 +26,7 @@ class DiscoveryController extends Controller
         return response()->json(['videos' => $videos]);
     }
 
-    public function remake(Request $request, YouTubeService $youtube, GeminiService $gemini)
+    public function remake(Request $request, YouTubeService $youtube, MiniMaxService $minimax)
     {
         $videoId = $request->input('videoId');
         $videoData = $youtube->getVideoDetails($videoId);
@@ -40,7 +40,7 @@ class DiscoveryController extends Controller
             'description' => $videoData['snippet']['description'],
         ];
 
-        $plan = $gemini->analyzeVideo($context);
+        $plan = $minimax->analyzeVideo($context);
 
         return response()->json([
             'success' => true,

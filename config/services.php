@@ -43,6 +43,11 @@ return [
         'key' => env('GOOGLE_API_KEY'),
     ],
 
+    'minimax' => [
+        'key' => env('MINIMAX_API_KEY'),
+        'model' => env('MINIMAX_MODEL', 'MiniMax-M2.1'),
+    ],
+
     'kie' => [
         'key' => env('KIE_API_KEY'),
     ],
