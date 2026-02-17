@@ -619,84 +619,102 @@ export default function Dashboard() {
                         </div>
                     ) : (
                         <div className="flex flex-col gap-8">
-                            {/* Search Bar */}
-                            <div className="flex flex-col gap-4 items-center">
-                                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-3xl">
-                                    <div className="relative flex-1 w-full">
-                                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                                            <Search className="text-zinc-500" size={18} />
-                                        </div>
-                                        <input 
-                                            type="text" 
-                                            value={searchQuery}
-                                            onChange={(e) => setSearchQuery(e.target.value)}
-                                            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                                            placeholder={t('search_placeholder')} 
-                                            className="w-full bg-zinc-900 border border-zinc-700 rounded-xl py-4 pl-10 pr-4 text-white focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 transition-all outline-none"
-                                        />
-                                        <button 
-                                            onClick={() => setShowFilters(!showFilters)}
-                                            className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg transition-colors ${showFilters ? 'bg-yellow-400 text-black' : 'text-zinc-500 hover:bg-zinc-800'}`}
-                                        >
-                                            <Filter size={18} />
-                                        </button>
+                            {/* Prominent Search Section */}
+                            <div className="py-12 px-4 relative overflow-hidden text-center">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.05),transparent_70%)] pointer-events-none"></div>
+                                
+                                <div className="max-w-3xl mx-auto relative z-10">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 text-[10px] font-black uppercase tracking-widest mb-6">
+                                        <Sparkles size={12} className="fill-yellow-400" />
+                                        <span>AI 爆紅影片偵測器</span>
                                     </div>
-                                    <button 
-                                        onClick={handleSearch}
-                                        disabled={loading}
-                                        className="w-full sm:w-auto bg-yellow-400 text-black px-8 py-4 rounded-xl font-bold hover:bg-yellow-300 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                                    >
-                                        {loading ? <Loader2 className="animate-spin" size={18} /> : <>{t('start_exploring')} <Play size={18} /></>}
-                                    </button>
-                                </div>
+                                    <h3 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tighter">
+                                        搜尋您的 <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">流量密碼</span>
+                                    </h3>
+                                    <p className="text-zinc-500 text-sm mb-10 max-w-lg mx-auto">輸入關鍵字，讓 AI 幫您從 YouTube 海量 Shorts 中精選出最具重製潛力的爆紅素材。</p>
 
-                                {showFilters && (
-                                    <div className="w-full max-w-3xl bg-zinc-900 border border-zinc-800 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 animate-in slide-in-from-top-2 duration-200">
-                                        <div className="space-y-2 text-left">
-                                            <label className="text-[10px] uppercase font-bold text-zinc-500 tracking-widest flex items-center gap-2">
-                                                <TrendingUp size={12} /> 排序方式
-                                            </label>
-                                            <div className="grid grid-cols-2 gap-2">
-                                                {[
-                                                    { id: 'relevance', label: '相關性' },
-                                                    { id: 'date', label: '最新上傳' },
-                                                    { id: 'viewCount', label: '觀看次數' },
-                                                    { id: 'rating', label: '評分高低' }
-                                                ].map((opt) => (
-                                                    <button
-                                                        key={opt.id}
-                                                        onClick={() => setOrder(opt.id)}
-                                                        className={`px-3 py-2 rounded-lg text-xs font-bold border transition-all ${order === opt.id ? 'bg-yellow-400/10 border-yellow-400 text-yellow-400' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
-                                                    >
-                                                        {opt.label}
-                                                    </button>
-                                                ))}
+                                    <div className="relative group max-w-2xl mx-auto">
+                                        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                                        <div className="relative flex flex-col sm:flex-row gap-2 bg-zinc-900 border border-zinc-800 p-2 rounded-2xl shadow-2xl">
+                                            <div className="relative flex-1 flex items-center">
+                                                <div className="absolute left-4 text-zinc-500">
+                                                    <Search size={20} />
+                                                </div>
+                                                <input 
+                                                    type="text" 
+                                                    value={searchQuery}
+                                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                                                    placeholder={t('search_placeholder')} 
+                                                    className="w-full bg-transparent border-none text-white pl-12 pr-12 py-3 text-lg focus:ring-0 outline-none placeholder:text-zinc-600"
+                                                />
+                                                <button 
+                                                    onClick={() => setShowFilters(!showFilters)}
+                                                    className={`absolute right-2 p-2 rounded-xl transition-all ${showFilters ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' : 'text-zinc-500 hover:bg-zinc-800 hover:text-white'}`}
+                                                >
+                                                    <Filter size={20} />
+                                                </button>
                                             </div>
+                                            <button 
+                                                onClick={handleSearch}
+                                                disabled={loading}
+                                                className="bg-yellow-400 text-black px-8 py-3 rounded-xl font-black hover:bg-yellow-300 transition-all flex items-center justify-center gap-2 shadow-lg shadow-yellow-400/20 disabled:opacity-50 min-w-[140px]"
+                                            >
+                                                {loading ? <Loader2 className="animate-spin" size={20} /> : <>{t('start_exploring')} <Play size={20} fill="currentColor" /></>}
+                                            </button>
                                         </div>
-                                        <div className="space-y-2 text-left">
-                                            <label className="text-[10px] uppercase font-bold text-zinc-500 tracking-widest flex items-center gap-2">
-                                                <Globe size={12} /> 語言設定
-                                            </label>
-                                            <div className="grid grid-cols-2 gap-2">
-                                                {[
-                                                    { id: 'zh-Hant', label: '繁體中文' },
-                                                    { id: 'zh-Hans', label: '簡體中文' },
-                                                    { id: 'en', label: '英文' },
-                                                    { id: 'all', label: '不限語言' }
-                                                ].map((opt) => (
-                                                    <button
-                                                        key={opt.id}
-                                                        onClick={() => setLanguage(opt.id)}
-                                                        className={`px-3 py-2 rounded-lg text-xs font-bold border transition-all ${language === opt.id ? 'bg-yellow-400/10 border-yellow-400 text-yellow-400' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
-                                                    >
-                                                        {opt.label}
-                                                    </button>
-                                                ))}
+
+                                        {showFilters && (
+                                            <div className="absolute top-full left-0 right-0 mt-4 bg-zinc-900 border border-zinc-800 rounded-3xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 shadow-2xl z-50 animate-in fade-in slide-in-from-top-4 duration-300">
+                                                <div className="space-y-3 text-left">
+                                                    <label className="text-[10px] uppercase font-black text-zinc-500 tracking-[0.2em] flex items-center gap-2">
+                                                        <TrendingUp size={14} className="text-yellow-400" /> 排序方式
+                                                    </label>
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        {[
+                                                            { id: 'relevance', label: '相關性' },
+                                                            { id: 'date', label: '最新上傳' },
+                                                            { id: 'viewCount', label: '觀看次數' },
+                                                            { id: 'rating', label: '評分高低' }
+                                                        ].map((opt) => (
+                                                            <button
+                                                                key={opt.id}
+                                                                onClick={() => setOrder(opt.id)}
+                                                                className={`px-3 py-2.5 rounded-xl text-xs font-bold border transition-all ${order === opt.id ? 'bg-yellow-400/10 border-yellow-400 text-yellow-400' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
+                                                            >
+                                                                {opt.label}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <div className="space-y-3 text-left">
+                                                    <label className="text-[10px] uppercase font-black text-zinc-500 tracking-[0.2em] flex items-center gap-2">
+                                                        <Globe size={14} className="text-yellow-400" /> 語言設定
+                                                    </label>
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        {[
+                                                            { id: 'zh-Hant', label: '繁體中文' },
+                                                            { id: 'zh-Hans', label: '簡體中文' },
+                                                            { id: 'en', label: '英文' },
+                                                            { id: 'all', label: '不限語言' }
+                                                        ].map((opt) => (
+                                                            <button
+                                                                key={opt.id}
+                                                                onClick={() => setLanguage(opt.id)}
+                                                                className={`px-3 py-2.5 rounded-xl text-xs font-bold border transition-all ${language === opt.id ? 'bg-yellow-400/10 border-yellow-400 text-yellow-400' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
+                                                            >
+                                                                {opt.label}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        )}
                                     </div>
-                                )}
+                                </div>
                             </div>
+
+                            {/* Discovery Results */}
 
                             {/* Discovery Results */}
                             {videos.length > 0 && (
