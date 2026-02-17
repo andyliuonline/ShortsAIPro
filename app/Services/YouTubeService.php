@@ -15,7 +15,7 @@ class YouTubeService
         $this->apiKey = config('services.youtube.key');
     }
 
-    public function searchShorts(string $query, int $maxResults = 12, string $order = 'relevance', string $language = 'zh-Hant')
+    public function searchShorts(string $query, int $maxResults = 12, string $order = 'viewCount', string $language = 'zh-Hant')
     {
         $queryHash = md5($query . '_' . $maxResults . '_' . $order . '_' . $language);
 

@@ -10,7 +10,7 @@ export default function Dashboard() {
     const { auth, hasYouTube, locale } = usePage<any>().props;
     const { t } = useTranslate();
     const [searchQuery, setSearchQuery] = useState("");
-    const [order, setOrder] = useState("relevance");
+    const [order, setOrder] = useState("viewCount");
     const [language, setLanguage] = useState("zh-Hant");
     const [showFilters, setShowFilters] = useState(false);
     const [videos, setVideos] = useState<any[]>([]);
@@ -656,10 +656,10 @@ export default function Dashboard() {
                                                     </label>
                                                     <div className="grid grid-cols-2 gap-3">
                                                         {[
-                                                            { id: 'relevance', label: '相關性' },
-                                                            { id: 'date', label: '最新上傳' },
-                                                            { id: 'viewCount', label: '觀看次數' },
-                                                            { id: 'rating', label: '評分高低' }
+                                                            { id: 'viewCount', label: '🔥 爆紅熱門' },
+                                                            { id: 'relevance', label: '✨ 系統推薦' },
+                                                            { id: 'date', label: '🆕 最新趨勢' },
+                                                            { id: 'rating', label: '⭐️ 評分最高' }
                                                         ].map((opt) => (
                                                             <button
                                                                 key={opt.id}
