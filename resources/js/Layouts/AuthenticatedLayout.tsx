@@ -3,6 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import LanguageSwitcher from '@/Components/LanguageSwitcher';
+import ThemeSwitcher from '@/Components/ThemeSwitcher';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 import { useTranslate } from "@/Helpers/useTranslate";
@@ -68,6 +69,10 @@ export default function Authenticated({
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
+                                        <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-700">
+                                            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">介面風格</p>
+                                            <ThemeSwitcher />
+                                        </div>
                                         <Dropdown.Link
                                             href={route('profile.edit')}
                                         >
@@ -154,6 +159,10 @@ export default function Authenticated({
                         </div>
 
                         <div className="mt-3 space-y-1">
+                            <div className="px-4 py-2">
+                                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">介面風格</p>
+                                <ThemeSwitcher />
+                            </div>
                             <ResponsiveNavLink href={route('profile.edit')}>
                                 個人資料
                             </ResponsiveNavLink>
