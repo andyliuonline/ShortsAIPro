@@ -36,14 +36,6 @@ export default function Authenticated({
                                 >
                                     {t('dashboard')}
                                 </NavLink>
-                                {user.is_admin && (
-                                    <NavLink
-                                        href="/admin"
-                                        active={route().current('admin.*')}
-                                    >
-                                        {t('admin_dashboard')}
-                                    </NavLink>
-                                )}
                             </div>
                         </div>
 
@@ -149,14 +141,6 @@ export default function Authenticated({
                         >
                             {t('dashboard')}
                         </ResponsiveNavLink>
-                        {user.is_admin && (
-                            <ResponsiveNavLink
-                                href="/admin"
-                                active={route().current('admin.*')}
-                            >
-                                {t('admin_dashboard')}
-                            </ResponsiveNavLink>
-                        )}
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
