@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
 
-        if (str_contains(config('app.url'), 'ngrok-free.dev')) {
+        if ($this->app->environment('production')) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
     }
