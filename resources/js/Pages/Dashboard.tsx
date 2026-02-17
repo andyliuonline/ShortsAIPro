@@ -221,34 +221,34 @@ export default function Dashboard() {
                         {t('dashboard_title')}
                     </h2>
                     <div className="flex items-center gap-3">
-                        <div className="flex bg-zinc-900 rounded-lg p-1 border border-zinc-800">
+                        <div className="flex bg-gray-100 dark:bg-zinc-900 rounded-xl p-1 border border-gray-200 dark:border-zinc-800 shadow-inner">
                             <button 
                                 onClick={() => setView('search')}
-                                className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'search' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
+                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'search' ? 'bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
                             >
                                 {t('search_videos')}
                             </button>
                             <button 
                                 onClick={() => setView('history')}
-                                className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'history' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
+                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'history' ? 'bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
                             >
                                 {t('history')}
                             </button>
                             <button 
                                 onClick={() => setView('pricing')}
-                                className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'pricing' ? 'bg-yellow-400 text-black shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
+                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'pricing' ? 'bg-yellow-400 text-black shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
                             >
                                 {t('pricing')}
                             </button>
                             <button 
                                 onClick={() => setView('referral')}
-                                className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'referral' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
+                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'referral' ? 'bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
                             >
                                 {t('referral')}
                             </button>
                             <button 
                                 onClick={() => setView('leaderboard')}
-                                className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${view === 'leaderboard' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
+                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${view === 'leaderboard' ? 'bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm' : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'}`}
                             >
                                 {t('leaderboard')}
                             </button>
@@ -271,51 +271,51 @@ export default function Dashboard() {
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     {/* User Status Bar */}
-                    <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="p-4 rounded-2xl bg-white dark:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 flex items-center justify-between shadow-sm">
+                    <div className="mb-10 grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                        <div className="p-5 rounded-[2rem] bg-white/70 dark:bg-zinc-900/50 border border-white dark:border-zinc-800 flex items-center justify-between shadow-xl shadow-gray-200/50 dark:shadow-none backdrop-blur-md hover:scale-[1.02] transition-all duration-300 group">
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-full bg-yellow-400 flex flex-col items-center justify-center text-black shadow-[0_0_15px_rgba(250,204,21,0.3)]">
-                                    <p className="text-[10px] font-black leading-none uppercase">LV</p>
-                                    <p className="text-xl font-black leading-none">{auth.user.level}</p>
+                                <div className="w-14 h-14 rounded-2xl bg-yellow-400 flex flex-col items-center justify-center text-black shadow-[0_8px_20px_rgba(250,204,21,0.4)] group-hover:rotate-3 transition-transform">
+                                    <p className="text-[10px] font-black leading-none uppercase opacity-70">LV</p>
+                                    <p className="text-2xl font-black leading-none">{auth.user.level}</p>
                                 </div>
                                 <div className="flex-1 min-w-[120px]">
-                                    <div className="flex justify-between items-end mb-1">
-                                        <p className="text-[10px] uppercase font-bold text-gray-500 dark:text-zinc-500 tracking-wider">創作者等級</p>
-                                        <p className="text-[10px] text-gray-400 dark:text-zinc-400 font-bold">{auth.user.xp} / {auth.gamification.next_level_xp} XP</p>
+                                    <div className="flex justify-between items-end mb-1.5">
+                                        <p className="text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.15em]">創作者等級</p>
+                                        <p className="text-[10px] text-gray-500 dark:text-zinc-400 font-bold">{auth.user.xp} / {auth.gamification.next_level_xp} XP</p>
                                     </div>
-                                    <div className="w-full h-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-                                        <div className="h-full bg-yellow-400" style={{ width: `${auth.gamification.xp_progress}%` }}></div>
+                                    <div className="w-full h-2 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden shadow-inner">
+                                        <div className="h-full bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.5)]" style={{ width: `${auth.gamification.xp_progress}%` }}></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="p-4 rounded-2xl bg-white dark:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 flex items-center justify-between shadow-sm">
+                        <div className="p-5 rounded-[2rem] bg-white/70 dark:bg-zinc-900/50 border border-white dark:border-zinc-800 flex items-center justify-between shadow-xl shadow-gray-200/50 dark:shadow-none backdrop-blur-md hover:scale-[1.02] transition-all duration-300 group">
                             <div className="flex items-center gap-4">
-                                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${auth.user.streak_count > 0 ? 'bg-orange-500 text-white animate-pulse shadow-[0_0_15px_rgba(249,115,22,0.4)]' : 'bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-500'}`}>
-                                    <TrendingUp size={20} />
+                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${auth.user.streak_count > 0 ? 'bg-orange-500 text-white animate-pulse shadow-[0_8px_20px_rgba(249,115,22,0.4)]' : 'bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-500'}`}>
+                                    <TrendingUp size={24} />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] uppercase font-bold text-gray-500 dark:text-zinc-500 tracking-wider">連續創作</p>
-                                    <p className="text-sm font-bold text-gray-900 dark:text-white uppercase">{t('streak_days', { count: auth.user.streak_count || 0 })}</p>
+                                    <p className="text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.15em]">連續創作</p>
+                                    <p className="text-lg font-black text-gray-900 dark:text-white uppercase">{t('streak_days', { count: auth.user.streak_count || 0 })}</p>
                                 </div>
                             </div>
-                            {auth.user.streak_count >= 7 && <div className="bg-orange-500/10 text-orange-600 dark:text-orange-400 px-2 py-1 rounded text-[10px] font-bold border border-orange-500/20">獲得 7 天獎勵</div>}
+                            {auth.user.streak_count >= 7 && <div className="bg-orange-500/10 text-orange-600 dark:text-orange-400 px-3 py-1.5 rounded-xl text-[10px] font-black border border-orange-500/20 shadow-sm">獲得 7 天獎勵</div>}
                         </div>
 
-                        <div className="p-4 rounded-2xl bg-white dark:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 flex items-center justify-between shadow-sm">
+                        <div className="p-5 rounded-[2rem] bg-white/70 dark:bg-zinc-900/50 border border-white dark:border-zinc-800 flex items-center justify-between shadow-xl shadow-gray-200/50 dark:shadow-none backdrop-blur-md hover:scale-[1.02] transition-all duration-300 group">
                             <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-yellow-500">
-                                    <Zap size={20} fill="currentColor" />
+                                <div className="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform">
+                                    <Zap size={24} fill="currentColor" />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] uppercase font-bold text-gray-500 dark:text-zinc-500 tracking-wider">{t('remaining_credits')}</p>
-                                    <p className="text-sm font-bold text-gray-900 dark:text-white uppercase">{auth.user.credits || 0} {t('credits_unit')}</p>
+                                    <p className="text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.15em]">{t('remaining_credits')}</p>
+                                    <p className="text-lg font-black text-gray-900 dark:text-white uppercase">{auth.user.credits || 0} {t('credits_unit')}</p>
                                 </div>
                             </div>
                             <button 
                                 onClick={() => setView('pricing')}
-                                className="bg-yellow-400 text-black px-4 py-2 rounded-lg text-xs font-bold hover:bg-yellow-300 transition-all shadow-sm active:scale-95"
+                                className="bg-gradient-to-br from-yellow-400 to-orange-400 text-black px-5 py-2.5 rounded-xl text-xs font-black hover:shadow-[0_8px_20px_rgba(250,204,21,0.4)] hover:translate-y-[-2px] transition-all active:scale-95"
                             >
                                 {t('recharge')}
                             </button>
@@ -618,27 +618,27 @@ export default function Dashboard() {
                             </div>
                         </div>
                     ) : (
-                        <div className="flex flex-col gap-8">
+                        <div className="flex flex-col gap-10">
                             {/* Prominent Search Section */}
-                            <div className="py-12 px-4 relative overflow-hidden text-center rounded-[3rem] bg-gray-50/50 dark:bg-transparent">
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.1),transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.05),transparent_70%)] pointer-events-none"></div>
+                            <div className="py-16 px-6 relative overflow-hidden text-center rounded-[4rem] bg-white/40 dark:bg-transparent border border-white dark:border-transparent shadow-2xl shadow-gray-200/50 dark:shadow-none backdrop-blur-sm">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.15),transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.05),transparent_70%)] pointer-events-none"></div>
                                 
                                 <div className="max-w-3xl mx-auto relative z-10">
-                                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-600 dark:text-yellow-400 text-[10px] font-black uppercase tracking-widest mb-6">
-                                        <Sparkles size={12} className="fill-current" />
+                                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-600 dark:text-yellow-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8 shadow-sm">
+                                        <Sparkles size={12} className="fill-current animate-pulse" />
                                         <span>AI 爆紅影片偵測器</span>
                                     </div>
-                                    <h3 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-4 tracking-tighter">
-                                        搜尋您的 <span className="bg-gradient-to-r from-yellow-500 to-orange-600 dark:from-yellow-400 dark:to-orange-500 bg-clip-text text-transparent">流量密碼</span>
+                                    <h3 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white mb-6 tracking-tighter leading-tight">
+                                        搜尋您的 <span className="bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 dark:from-yellow-400 dark:to-orange-500 bg-clip-text text-transparent">流量密碼</span>
                                     </h3>
-                                    <p className="text-gray-500 dark:text-zinc-500 text-sm mb-10 max-w-lg mx-auto">輸入關鍵字，讓 AI 幫您從 YouTube 海量 Shorts 中精選出最具重製潛力的爆紅素材。</p>
+                                    <p className="text-gray-500 dark:text-zinc-500 text-lg mb-12 max-w-xl mx-auto leading-relaxed font-medium">輸入關鍵字，讓 AI 從 YouTube 海量數據中精選出<br className="hidden md:block" />最具重製潛力的爆紅素材。</p>
 
                                     <div className="relative group max-w-2xl mx-auto">
-                                        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                                        <div className="relative flex flex-col sm:flex-row gap-2 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 p-2 rounded-2xl shadow-xl">
+                                        <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-[2.5rem] blur-2xl opacity-10 group-hover:opacity-25 transition duration-1000"></div>
+                                        <div className="relative flex flex-col sm:flex-row gap-3 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 p-3 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-none">
                                             <div className="relative flex-1 flex items-center">
-                                                <div className="absolute left-4 text-gray-400 dark:text-zinc-500">
-                                                    <Search size={20} />
+                                                <div className="absolute left-5 text-gray-400 dark:text-zinc-500">
+                                                    <Search size={22} />
                                                 </div>
                                                 <input 
                                                     type="text" 
@@ -646,31 +646,31 @@ export default function Dashboard() {
                                                     onChange={(e) => setSearchQuery(e.target.value)}
                                                     onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                                                     placeholder={t('search_placeholder')} 
-                                                    className="w-full bg-transparent border-none text-gray-900 dark:text-white pl-12 pr-12 py-3 text-lg focus:ring-0 outline-none placeholder:text-gray-300 dark:placeholder:text-zinc-600"
+                                                    className="w-full bg-transparent border-none text-gray-900 dark:text-white pl-14 pr-14 py-4 text-xl focus:ring-0 outline-none placeholder:text-gray-300 dark:placeholder:text-zinc-600 font-bold"
                                                 />
                                                 <button 
                                                     onClick={() => setShowFilters(!showFilters)}
-                                                    className={`absolute right-2 p-2 rounded-xl transition-all ${showFilters ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' : 'text-gray-400 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white'}`}
+                                                    className={`absolute right-3 p-3 rounded-2xl transition-all ${showFilters ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/30' : 'text-gray-400 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white'}`}
                                                 >
-                                                    <Filter size={20} />
+                                                    <Filter size={22} />
                                                 </button>
                                             </div>
                                             <button 
                                                 onClick={handleSearch}
                                                 disabled={loading}
-                                                className="bg-yellow-400 text-black px-8 py-3 rounded-xl font-black hover:bg-yellow-300 transition-all flex items-center justify-center gap-2 shadow-lg shadow-yellow-400/20 disabled:opacity-50 min-w-[140px]"
+                                                className="bg-gray-900 dark:bg-yellow-400 text-white dark:text-black px-10 py-4 rounded-[1.5rem] font-black hover:bg-black dark:hover:bg-yellow-300 transition-all flex items-center justify-center gap-3 shadow-xl shadow-gray-200 dark:shadow-yellow-400/20 disabled:opacity-50 min-w-[180px] group-hover:translate-y-[-2px] active:scale-95"
                                             >
-                                                {loading ? <Loader2 className="animate-spin" size={20} /> : <>{t('start_exploring')} <Play size={20} fill="currentColor" /></>}
+                                                {loading ? <Loader2 className="animate-spin" size={22} /> : <>{t('start_exploring')} <Play size={20} fill="currentColor" className="group-hover:translate-x-1 transition-transform" /></>}
                                             </button>
                                         </div>
 
                                         {showFilters && (
-                                            <div className="absolute top-full left-0 right-0 mt-4 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-3xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 shadow-2xl z-50 animate-in fade-in slide-in-from-top-4 duration-300">
-                                                <div className="space-y-3 text-left">
-                                                    <label className="text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.2em] flex items-center gap-2">
+                                            <div className="absolute top-full left-0 right-0 mt-6 bg-white/90 dark:bg-zinc-900/90 border border-gray-100 dark:border-zinc-800 rounded-[2.5rem] p-8 grid grid-cols-1 sm:grid-cols-2 gap-8 shadow-[0_30px_60px_rgba(0,0,0,0.1)] backdrop-blur-xl z-50 animate-in fade-in slide-in-from-top-6 duration-300">
+                                                <div className="space-y-4 text-left">
+                                                    <label className="text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.3em] flex items-center gap-2">
                                                         <TrendingUp size={14} className="text-yellow-500" /> 排序方式
                                                     </label>
-                                                    <div className="grid grid-cols-2 gap-2">
+                                                    <div className="grid grid-cols-2 gap-3">
                                                         {[
                                                             { id: 'relevance', label: '相關性' },
                                                             { id: 'date', label: '最新上傳' },
@@ -680,18 +680,18 @@ export default function Dashboard() {
                                                             <button
                                                                 key={opt.id}
                                                                 onClick={() => setOrder(opt.id)}
-                                                                className={`px-3 py-2.5 rounded-xl text-xs font-bold border transition-all ${order === opt.id ? 'bg-yellow-50 dark:bg-yellow-400/10 border-yellow-400 text-yellow-600 dark:text-yellow-400' : 'bg-gray-50 dark:bg-zinc-950 border-gray-100 dark:border-zinc-800 text-gray-500 dark:text-zinc-500 hover:border-gray-200 dark:hover:border-zinc-700'}`}
+                                                                className={`px-4 py-3 rounded-2xl text-xs font-black border transition-all ${order === opt.id ? 'bg-yellow-400 text-black border-yellow-400 shadow-lg shadow-yellow-400/20' : 'bg-gray-50 dark:bg-zinc-950 border-transparent text-gray-400 dark:text-zinc-500 hover:border-gray-200 dark:hover:border-zinc-700 hover:text-gray-600'}`}
                                                             >
                                                                 {opt.label}
                                                             </button>
                                                         ))}
                                                     </div>
                                                 </div>
-                                                <div className="space-y-3 text-left">
-                                                    <label className="text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.2em] flex items-center gap-2">
+                                                <div className="space-y-4 text-left">
+                                                    <label className="text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.3em] flex items-center gap-2">
                                                         <Globe size={14} className="text-yellow-500" /> 語言設定
                                                     </label>
-                                                    <div className="grid grid-cols-2 gap-2">
+                                                    <div className="grid grid-cols-2 gap-3">
                                                         {[
                                                             { id: 'zh-Hant', label: '繁體中文' },
                                                             { id: 'zh-Hans', label: '簡體中文' },
@@ -701,7 +701,7 @@ export default function Dashboard() {
                                                             <button
                                                                 key={opt.id}
                                                                 onClick={() => setLanguage(opt.id)}
-                                                                className={`px-3 py-2.5 rounded-xl text-xs font-bold border transition-all ${language === opt.id ? 'bg-yellow-50 dark:bg-yellow-400/10 border-yellow-400 text-yellow-600 dark:text-yellow-400' : 'bg-gray-50 dark:bg-zinc-950 border-gray-100 dark:border-zinc-800 text-gray-500 dark:text-zinc-500 hover:border-gray-200 dark:hover:border-zinc-700'}`}
+                                                                className={`px-4 py-3 rounded-2xl text-xs font-black border transition-all ${language === opt.id ? 'bg-yellow-400 text-black border-yellow-400 shadow-lg shadow-yellow-400/20' : 'bg-gray-50 dark:bg-zinc-950 border-transparent text-gray-400 dark:text-zinc-500 hover:border-gray-200 dark:hover:border-zinc-700 hover:text-gray-600'}`}
                                                             >
                                                                 {opt.label}
                                                             </button>
