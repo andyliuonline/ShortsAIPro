@@ -139,10 +139,12 @@ export default function UpdateApiSettingsForm() {
                                         <label className="block text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.2em]">Kie.ai API Key</label>
                                         {apiSettings?.user_kie_api_key ? (
                                             <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20">
-                                                <CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_kie_api_key)}
+                                                <CheckCircle2 size={10}/> 已配置
                                             </span>
                                         ) : (
-                                            <span className="text-[10px] font-black text-gray-400">尚未配置</span>
+                                            <span className="text-[10px] font-black text-red-500 flex items-center gap-1 bg-red-500/10 px-2 py-0.5 rounded-full border border-red-500/20">
+                                                尚未配置
+                                            </span>
                                         )}
                                     </div>
                                     <input
@@ -237,9 +239,10 @@ export default function UpdateApiSettingsForm() {
                                         <div>
                                             <div className="flex justify-between items-center mb-3">
                                                 <label className="block text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.2em]">3. 填寫 API Key</label>
-                                                {data.analysis_model_provider === 'openai' && apiSettings?.user_openai_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20"><CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_openai_api_key)}</span>}
-                                                {data.analysis_model_provider === 'anthropic' && apiSettings?.user_anthropic_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20"><CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_anthropic_api_key)}</span>}
-                                                {data.analysis_model_provider === 'google' && apiSettings?.user_google_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20"><CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_google_api_key)}</span>}
+                                                {data.analysis_model_provider === 'openai' && apiSettings?.user_openai_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20"><CheckCircle2 size={10}/> 已配置</span>}
+                                                {data.analysis_model_provider === 'anthropic' && apiSettings?.user_anthropic_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20"><CheckCircle2 size={10}/> 已配置</span>}
+                                                {data.analysis_model_provider === 'google' && apiSettings?.user_google_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20"><CheckCircle2 size={10}/> 已配置</span>}
+                                                {data.analysis_model_provider !== 'system' && !apiSettings?.[`user_${data.analysis_model_provider}_api_key`] && <span className="text-[10px] font-black text-red-500 flex items-center gap-1 bg-red-500/10 px-2 py-0.5 rounded-full border border-red-500/20">尚未配置</span>}
                                             </div>
                                             {data.analysis_model_provider === 'openai' && (
                                                 <input
