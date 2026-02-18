@@ -1,10 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/react';
 import { useState, useEffect } from "react";
-import { Zap, Search, Play, Upload, TrendingUp, Loader2, Sparkles, X, CheckCircle2, AlertCircle, Youtube, History, Clock, FileVideo, CreditCard, Users, Gift, Share2, Wallet, Landmark, Trophy, Medal, Award, Filter, Globe, ChevronDown } from "lucide-react";
+import { Zap, Search, Play, Upload, TrendingUp, Loader2, Sparkles, X, CheckCircle2, AlertCircle, Youtube, History, Clock, FileVideo, CreditCard, Users, Gift, Share2, Wallet, Landmark, Trophy, Medal, Award, Filter, Globe, ChevronDown, Key } from "lucide-react";
 import axios from "axios";
 import Pricing from "@/Components/Pricing";
 import { useTranslate } from "@/Helpers/useTranslate";
+import UpdateApiSettingsForm from './Profile/Partials/UpdateApiSettingsForm';
 
 export default function Dashboard() {
     const { auth, hasYouTube, locale } = usePage<any>().props;
@@ -37,7 +38,7 @@ export default function Dashboard() {
     
     // History State
     const [history, setHistory] = useState<any[]>([]);
-    const [view, setView] = useState<'search' | 'history' | 'pricing' | 'referral' | 'leaderboard' | 'achievements'>('search');
+    const [view, setView] = useState<'search' | 'history' | 'pricing' | 'referral' | 'leaderboard' | 'achievements' | 'api'>('search');
 
     // Publishing State
     const [publishing, setPublishing] = useState(false);
@@ -252,6 +253,12 @@ export default function Dashboard() {
                         className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all ${view === 'achievements' ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' : 'text-gray-500 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800'}`}
                     >
                         個人成就
+                    </button>
+                    <button 
+                        onClick={() => setView('api')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all ${view === 'api' ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' : 'text-gray-500 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800'}`}
+                    >
+                        API設定
                     </button>
                     
                     {!hasYouTube && (
@@ -594,6 +601,18 @@ export default function Dashboard() {
                                 </div>
                             </div>
                         </div>
+                    ) : view === 'api' ? (
+                        <div className="space-y-8">
+                            <div className="text-center max-w-2xl mx-auto mb-12">
+                                <h3 className="text-4xl font-black text-gray-900 dark:text-white mb-4">AI 服務金鑰設定</h3>
+                                <p className="text-gray-500 dark:text-zinc-500">配置您個人的 API Key，享受不受限的極速生成體驗。</p>
+                            </div>
+                            <div className="max-w-4xl mx-auto">
+                                <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 p-10 rounded-[3rem] shadow-xl">
+                                    <UpdateApiSettingsForm />
+                                </div>
+                            </div>
+                        </div>
                     ) : (
                         <div className="flex flex-col gap-4">
                             {/* Prominent Search Section */}
@@ -612,7 +631,7 @@ export default function Dashboard() {
 
                                     <div className="relative group max-w-2xl mx-auto">
                                         <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-[2.5rem] blur-2xl opacity-10 group-hover:opacity-25 transition duration-1000"></div>
-                                        <div className="relative flex flex-col sm:flex-row gap-2 bg-white/80 dark:bg-zinc-900/90 border border-gray-100 dark:border-zinc-800 p-2 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl">
+                                        <div className="relative flex flex-col sm:flex-row gap-3 bg-white/80 dark:bg-zinc-900/90 border border-gray-100 dark:border-zinc-800 p-2.5 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl">
                                             <div className="relative flex-1 flex items-center">
                                                 <div className="absolute left-5 text-gray-400 dark:text-zinc-500">
                                                     <Search size={20} />
@@ -623,11 +642,11 @@ export default function Dashboard() {
                                                     onChange={(e) => setSearchQuery(e.target.value)}
                                                     onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                                                     placeholder={t('search_placeholder')} 
-                                                    className="w-full bg-transparent border-none text-gray-900 dark:text-white pl-12 pr-12 py-2.5 text-lg focus:ring-0 outline-none placeholder:text-gray-300 dark:placeholder:text-zinc-600 font-bold"
+                                                    className="w-full bg-transparent border-none text-gray-900 dark:text-white pl-14 pr-14 py-2.5 text-lg focus:ring-0 outline-none placeholder:text-gray-300 dark:placeholder:text-zinc-600 font-bold"
                                                 />
                                                 <button 
                                                     onClick={() => setShowFilters(!showFilters)}
-                                                    className={`absolute right-3 p-2 rounded-2xl transition-all ${showFilters ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/30 scale-105' : 'text-gray-400 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white'}`}
+                                                    className={`absolute right-3 p-3 rounded-2xl transition-all ${showFilters ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/30 scale-105' : 'text-gray-400 dark:text-zinc-500 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white'}`}
                                                 >
                                                     <Filter size={20} />
                                                 </button>
