@@ -17,8 +17,8 @@ export default function UpdateApiSettingsForm() {
         user_google_api_key: '',
     });
 
-    const maskKey = (key: string) => {
-        if (!key) return null;
+    const maskKey = (key: string): string => {
+        if (!key) return '';
         if (key.length <= 8) return '********';
         return `${key.substring(0, 4)}****${key.substring(key.length - 4)}`;
     };
@@ -146,11 +146,11 @@ export default function UpdateApiSettingsForm() {
                                         )}
                                     </div>
                                     <input
-                                        type="password"
+                                        type="text"
                                         value={data.user_kie_api_key}
                                         onChange={(e) => setData('user_kie_api_key', e.target.value)}
-                                        placeholder={apiSettings?.user_kie_api_key ? "已儲存金鑰，如需更新請在此輸入新 Key" : "填入您的 sk-..."}
-                                        className="w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none"
+                                        placeholder={apiSettings?.user_kie_api_key ? maskKey(apiSettings.user_kie_api_key) : "填入您的 sk-..."}
+                                        className={`w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none ${apiSettings?.user_kie_api_key && !data.user_kie_api_key ? 'text-green-500 placeholder:text-green-500/70' : 'text-gray-900 dark:text-white'}`}
                                     />
                                 </div>
                             </div>
@@ -243,29 +243,29 @@ export default function UpdateApiSettingsForm() {
                                             </div>
                                             {data.analysis_model_provider === 'openai' && (
                                                 <input
-                                                    type="password"
+                                                    type="text"
                                                     value={data.user_openai_api_key}
                                                     onChange={(e) => setData('user_openai_api_key', e.target.value)}
-                                                    placeholder={apiSettings?.user_openai_api_key ? "已儲存 OpenAI Key，如需更新請輸入新 Key" : "填入您的 OpenAI Key"}
-                                                    className="w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none"
+                                                    placeholder={apiSettings?.user_openai_api_key ? maskKey(apiSettings.user_openai_api_key) : "填入您的 OpenAI Key"}
+                                                    className={`w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none ${apiSettings?.user_openai_api_key && !data.user_openai_api_key ? 'text-green-500 placeholder:text-green-500/70' : 'text-gray-900 dark:text-white'}`}
                                                 />
                                             )}
                                             {data.analysis_model_provider === 'anthropic' && (
                                                 <input
-                                                    type="password"
+                                                    type="text"
                                                     value={data.user_anthropic_api_key}
                                                     onChange={(e) => setData('user_anthropic_api_key', e.target.value)}
-                                                    placeholder={apiSettings?.user_anthropic_api_key ? "已儲存 Anthropic Key，如需更新請輸入新 Key" : "填入您的 Anthropic Key"}
-                                                    className="w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none"
+                                                    placeholder={apiSettings?.user_anthropic_api_key ? maskKey(apiSettings.user_anthropic_api_key) : "填入您的 Anthropic Key"}
+                                                    className={`w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none ${apiSettings?.user_anthropic_api_key && !data.user_anthropic_api_key ? 'text-green-500 placeholder:text-green-500/70' : 'text-gray-900 dark:text-white'}`}
                                                 />
                                             )}
                                             {data.analysis_model_provider === 'google' && (
                                                 <input
-                                                    type="password"
+                                                    type="text"
                                                     value={data.user_google_api_key}
                                                     onChange={(e) => setData('user_google_api_key', e.target.value)}
-                                                    placeholder={apiSettings?.user_google_api_key ? "已儲存 Google Key，如需更新請輸入新 Key" : "填入您的 Google API Key"}
-                                                    className="w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none"
+                                                    placeholder={apiSettings?.user_google_api_key ? maskKey(apiSettings.user_google_api_key) : "填入您的 Google API Key"}
+                                                    className={`w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none ${apiSettings?.user_google_api_key && !data.user_google_api_key ? 'text-green-500 placeholder:text-green-500/70' : 'text-gray-900 dark:text-white'}`}
                                                 />
                                             )}
                                         </div>
