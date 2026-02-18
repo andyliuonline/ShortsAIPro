@@ -82,10 +82,16 @@ export default function UpdateApiSettingsForm() {
                                     <optgroup label="Sora 系列">
                                         <option value="sora-2-text-to-video">Sora 2 (720p)</option>
                                     </optgroup>
-                                    <optgroup label="Kling 系列 (高品質)">
-                                        <option value="kling-v1-text-to-video">Kling V1.0 (720p)</option>
-                                        <option value="kling-v1-5-text-to-video">Kling V1.5 (1080p)</option>
-                                        <option value="kling-v1-5-text-to-video-1080p">Kling V1.5 (1080p High)</option>
+                                    <optgroup label="Kling 系列 (Text-to-Video)">
+                                        <option value="kling-v1-text-to-video">Kling 1.0 (720p)</option>
+                                        <option value="kling-v1-5-text-to-video">Kling 1.5 (1080p)</option>
+                                        <option value="kling-v1-5-text-to-video-1080p">Kling 1.5 (1080p High)</option>
+                                        <option value="kling-v2-1-text-to-video-720p">Kling 2.1 (720p)</option>
+                                        <option value="kling-v2-1-text-to-video-1080p">Kling 2.1 (1080p)</option>
+                                        <option value="kling-v2-6-text-to-video-720p">Kling 2.6 (720p)</option>
+                                        <option value="kling-v2-6-text-to-video-1080p">Kling 2.6 (1080p)</option>
+                                        <option value="kling-v3-0-text-to-video-720p">Kling 3.0 (720p)</option>
+                                        <option value="kling-v3-0-text-to-video-1080p">Kling 3.0 (1080p)</option>
                                     </optgroup>
                                     <optgroup label="Luma 系列">
                                         <option value="luma-dream-machine">Luma Dream Machine</option>
