@@ -13,8 +13,19 @@ class DiscoveryController extends Controller
 {
     public function index()
     {
+        $user = auth()->user();
         return Inertia::render('Dashboard', [
-            'hasYouTube' => (bool) auth()->user()->google_refresh_token,
+            'hasYouTube' => (bool) $user->google_refresh_token,
+            'apiSettings' => [
+                'video_model_provider' => $user->video_model_provider,
+                'video_model_id' => $user->video_model_id,
+                'user_kie_api_key' => $user->user_kie_api_key,
+                'analysis_model_provider' => $user->analysis_model_provider,
+                'analysis_model_id' => $user->analysis_model_id,
+                'user_openai_api_key' => $user->user_openai_api_key,
+                'user_anthropic_api_key' => $user->user_anthropic_api_key,
+                'user_google_api_key' => $user->user_google_api_key,
+            ],
         ]);
     }
 
