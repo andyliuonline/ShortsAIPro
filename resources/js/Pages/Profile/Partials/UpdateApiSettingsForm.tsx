@@ -9,12 +9,12 @@ export default function UpdateApiSettingsForm() {
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         video_model_provider: apiSettings?.video_model_provider || 'kie',
         video_model_id: apiSettings?.video_model_id || 'sora-2-text-to-video',
-        user_kie_api_key: apiSettings?.user_kie_api_key || '',
+        user_kie_api_key: '',
         analysis_model_provider: apiSettings?.analysis_model_provider || 'system',
         analysis_model_id: apiSettings?.analysis_model_id || 'default',
-        user_openai_api_key: apiSettings?.user_openai_api_key || '',
-        user_anthropic_api_key: apiSettings?.user_anthropic_api_key || '',
-        user_google_api_key: apiSettings?.user_google_api_key || '',
+        user_openai_api_key: '',
+        user_anthropic_api_key: '',
+        user_google_api_key: '',
     });
 
     const maskKey = (key: string) => {
@@ -47,6 +47,16 @@ export default function UpdateApiSettingsForm() {
         e.preventDefault();
         patch(route('profile.api-settings.update'), {
             preserveScroll: true,
+            onSuccess: () => {
+                // Clear password fields after success to maintain security feel
+                setData({
+                    ...data,
+                    user_kie_api_key: '',
+                    user_openai_api_key: '',
+                    user_anthropic_api_key: '',
+                    user_google_api_key: '',
+                });
+            }
         });
     };
 
@@ -127,13 +137,19 @@ export default function UpdateApiSettingsForm() {
                                 <div>
                                     <div className="flex justify-between items-center mb-3">
                                         <label className="block text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.2em]">Kie.ai API Key</label>
-                                        {apiSettings?.user_kie_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1"><CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_kie_api_key)}</span>}
+                                        {apiSettings?.user_kie_api_key ? (
+                                            <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20">
+                                                <CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_kie_api_key)}
+                                            </span>
+                                        ) : (
+                                            <span className="text-[10px] font-black text-gray-400">尚未配置</span>
+                                        )}
                                     </div>
                                     <input
                                         type="password"
                                         value={data.user_kie_api_key}
                                         onChange={(e) => setData('user_kie_api_key', e.target.value)}
-                                        placeholder="填入您的 sk-..."
+                                        placeholder={apiSettings?.user_kie_api_key ? "已儲存金鑰，如需更新請在此輸入新 Key" : "填入您的 sk-..."}
                                         className="w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none"
                                     />
                                 </div>
@@ -221,16 +237,16 @@ export default function UpdateApiSettingsForm() {
                                         <div>
                                             <div className="flex justify-between items-center mb-3">
                                                 <label className="block text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.2em]">3. 填寫 API Key</label>
-                                                {data.analysis_model_provider === 'openai' && apiSettings?.user_openai_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1"><CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_openai_api_key)}</span>}
-                                                {data.analysis_model_provider === 'anthropic' && apiSettings?.user_anthropic_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1"><CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_anthropic_api_key)}</span>}
-                                                {data.analysis_model_provider === 'google' && apiSettings?.user_google_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1"><CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_google_api_key)}</span>}
+                                                {data.analysis_model_provider === 'openai' && apiSettings?.user_openai_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20"><CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_openai_api_key)}</span>}
+                                                {data.analysis_model_provider === 'anthropic' && apiSettings?.user_anthropic_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20"><CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_anthropic_api_key)}</span>}
+                                                {data.analysis_model_provider === 'google' && apiSettings?.user_google_api_key && <span className="text-[10px] font-black text-green-500 flex items-center gap-1 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20"><CheckCircle2 size={10}/> 已配置: {maskKey(apiSettings.user_google_api_key)}</span>}
                                             </div>
                                             {data.analysis_model_provider === 'openai' && (
                                                 <input
                                                     type="password"
                                                     value={data.user_openai_api_key}
                                                     onChange={(e) => setData('user_openai_api_key', e.target.value)}
-                                                    placeholder="填入您的 OpenAI Key"
+                                                    placeholder={apiSettings?.user_openai_api_key ? "已儲存 OpenAI Key，如需更新請輸入新 Key" : "填入您的 OpenAI Key"}
                                                     className="w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none"
                                                 />
                                             )}
@@ -239,7 +255,7 @@ export default function UpdateApiSettingsForm() {
                                                     type="password"
                                                     value={data.user_anthropic_api_key}
                                                     onChange={(e) => setData('user_anthropic_api_key', e.target.value)}
-                                                    placeholder="填入您的 Anthropic Key"
+                                                    placeholder={apiSettings?.user_anthropic_api_key ? "已儲存 Anthropic Key，如需更新請輸入新 Key" : "填入您的 Anthropic Key"}
                                                     className="w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none"
                                                 />
                                             )}
@@ -248,7 +264,7 @@ export default function UpdateApiSettingsForm() {
                                                     type="password"
                                                     value={data.user_google_api_key}
                                                     onChange={(e) => setData('user_google_api_key', e.target.value)}
-                                                    placeholder="填入您的 Google API Key"
+                                                    placeholder={apiSettings?.user_google_api_key ? "已儲存 Google Key，如需更新請輸入新 Key" : "填入您的 Google API Key"}
                                                     className="w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none"
                                                 />
                                             )}
