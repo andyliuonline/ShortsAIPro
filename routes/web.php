@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Route::post('/language', function (\Illuminate\Http\Request $request) {
     $locale = $request->input('locale');
-    if (in_array($locale, ['en', 'zh_TW'])) {
+    if (in_array($locale, ['en', 'zh_TW', 'zh_CN', 'es'])) {
         session(['locale' => $locale]);
     }
     return back();
