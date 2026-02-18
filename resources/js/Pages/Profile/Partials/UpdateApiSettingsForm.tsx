@@ -83,8 +83,6 @@ export default function UpdateApiSettingsForm() {
                                         <option value="sora-2-text-to-video">Sora 2 (720p)</option>
                                     </optgroup>
                                     <optgroup label="Kling 系列 (Text-to-Video)">
-                                        <option value="kling-v2-1-text-to-video-720p">Kling 2.1 (720p)</option>
-                                        <option value="kling-v2-1-text-to-video-1080p">Kling 2.1 (1080p)</option>
                                         <option value="kling-v2-6-text-to-video-720p">Kling 2.6 (720p)</option>
                                         <option value="kling-v2-6-text-to-video-1080p">Kling 2.6 (1080p)</option>
                                         <option value="kling-v3-0-text-to-video-720p">Kling 3.0 (720p)</option>
