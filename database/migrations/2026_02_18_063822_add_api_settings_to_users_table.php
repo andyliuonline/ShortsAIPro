@@ -15,9 +15,11 @@ return new class extends Migration
             $table->string('video_model_provider')->default('kie')->after('last_generated_at');
             $table->string('video_model_id')->default('sora-2-text-to-video')->after('video_model_provider');
             $table->string('user_kie_api_key')->nullable()->after('video_model_id');
-            $table->string('analysis_model_provider')->default('minimax')->after('user_kie_api_key');
-            $table->string('user_openai_api_key')->nullable()->after('analysis_model_provider');
+            $table->string('analysis_model_provider')->default('system')->after('user_kie_api_key');
+            $table->string('analysis_model_id')->default('default')->after('analysis_model_provider');
+            $table->string('user_openai_api_key')->nullable()->after('analysis_model_id');
             $table->string('user_anthropic_api_key')->nullable()->after('user_openai_api_key');
+            $table->string('user_google_api_key')->nullable()->after('user_anthropic_api_key');
         });
     }
 
@@ -32,8 +34,10 @@ return new class extends Migration
                 'video_model_id',
                 'user_kie_api_key',
                 'analysis_model_provider',
+                'analysis_model_id',
                 'user_openai_api_key',
-                'user_anthropic_api_key'
+                'user_anthropic_api_key',
+                'user_google_api_key'
             ]);
         });
     }

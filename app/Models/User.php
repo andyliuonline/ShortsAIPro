@@ -52,8 +52,10 @@ class User extends Authenticatable implements FilamentUser
         'video_model_id',
         'user_kie_api_key',
         'analysis_model_provider',
+        'analysis_model_id',
         'user_openai_api_key',
         'user_anthropic_api_key',
+        'user_google_api_key',
     ];
 
     protected static function booted()

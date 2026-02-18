@@ -18,7 +18,8 @@ class MiniMaxService
     public function analyzeVideo(array $context)
     {
         $user = auth()->user();
-        $provider = $user->analysis_model_provider ?? 'minimax';
+        $provider = $user->analysis_model_provider ?? 'system';
+        $modelId = $user->analysis_model_id ?? 'default';
         $targetLang = ($context['locale'] ?? 'zh_TW') === 'zh_TW' ? 'Traditional Chinese (繁體中文)' : 'English';
 
         $prompt = "
@@ -41,28 +42,31 @@ class MiniMaxService
         ";
 
         if ($provider === 'openai' && $user->user_openai_api_key) {
-            return $this->callOpenAI($prompt, $user->user_openai_api_key);
+            return $this->callOpenAI($prompt, $user->user_openai_api_key, $modelId);
         }
 
         if ($provider === 'anthropic' && $user->user_anthropic_api_key) {
-            return $this->callAnthropic($prompt, $user->user_anthropic_api_key);
+            return $this->callAnthropic($prompt, $user->user_anthropic_api_key, $modelId);
+        }
+
+        if ($provider === 'google' && $user->user_google_api_key) {
+            return $this->callGemini($prompt, $user->user_google_api_key, $modelId);
         }
 
         // Default to MiniMax (System Key)
+        return $this->callMiniMax($prompt);
+    }
+
+    protected function callMiniMax($prompt)
+    {
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . $this->apiKey,
         ])->post("https://api.minimaxi.com/v1/text/chatcompletion_v2", [
             'model' => $this->model,
             'messages' => [
-                [
-                    'role' => 'system',
-                    'content' => 'You are a professional video content analyst. Always respond in valid JSON format.',
-                ],
-                [
-                    'role' => 'user',
-                    'content' => $prompt,
-                ],
+                ['role' => 'system', 'content' => 'You are a professional video content analyst. Always respond in valid JSON format.'],
+                ['role' => 'user', 'content' => $prompt],
             ],
         ]);
 
@@ -74,24 +78,35 @@ class MiniMaxService
         return $this->parseJsonResponse($text);
     }
 
-    protected function callOpenAI($prompt, $key)
+    protected function callOpenAI($prompt, $key, $modelId)
     {
         $response = Http::withToken($key)->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-4o',
+            'model' => $modelId === 'default' ? 'gpt-4o' : $modelId,
             'messages' => [['role' => 'user', 'content' => $prompt]],
             'response_format' => ['type' => 'json_object']
         ]);
-        return $response->json()['choices'][0]['message']['content'] ? json_decode($response->json()['choices'][0]['message']['content'], true) : null;
+        $text = $response->json()['choices'][0]['message']['content'] ?? '';
+        return json_decode($text, true);
     }
 
-    protected function callAnthropic($prompt, $key)
+    protected function callAnthropic($prompt, $key, $modelId)
     {
         $response = Http::withHeaders(['x-api-key' => $key, 'anthropic-version' => '2023-06-01'])->post('https://api.anthropic.com/v1/messages', [
-            'model' => 'claude-3-5-sonnet-20240620',
+            'model' => $modelId === 'default' ? 'claude-3-5-sonnet-20240620' : $modelId,
             'max_tokens' => 4096,
             'messages' => [['role' => 'user', 'content' => $prompt . " \n\n IMPORTANT: Output ONLY raw JSON."]]
         ]);
         $text = $response->json()['content'][0]['text'] ?? '';
+        return $this->parseJsonResponse($text);
+    }
+
+    protected function callGemini($prompt, $key, $modelId)
+    {
+        $model = $modelId === 'default' ? 'gemini-2.0-flash' : $modelId;
+        $response = Http::post("https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$key}", [
+            'contents' => [['parts' => [['text' => $prompt]]]]
+        ]);
+        $text = $response->json()['candidates'][0]['content']['parts'][0]['text'] ?? '';
         return $this->parseJsonResponse($text);
     }
 

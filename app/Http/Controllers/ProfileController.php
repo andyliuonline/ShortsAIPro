@@ -26,8 +26,10 @@ class ProfileController extends Controller
                 'video_model_id' => $request->user()->video_model_id,
                 'user_kie_api_key' => $request->user()->user_kie_api_key,
                 'analysis_model_provider' => $request->user()->analysis_model_provider,
+                'analysis_model_id' => $request->user()->analysis_model_id,
                 'user_openai_api_key' => $request->user()->user_openai_api_key,
                 'user_anthropic_api_key' => $request->user()->user_anthropic_api_key,
+                'user_google_api_key' => $request->user()->user_google_api_key,
             ],
         ]);
     }
@@ -39,8 +41,10 @@ class ProfileController extends Controller
             'video_model_id' => 'required|string',
             'user_kie_api_key' => 'nullable|string',
             'analysis_model_provider' => 'required|string',
+            'analysis_model_id' => 'required|string',
             'user_openai_api_key' => 'nullable|string',
             'user_anthropic_api_key' => 'nullable|string',
+            'user_google_api_key' => 'nullable|string',
         ]);
 
         $request->user()->fill($validated);
