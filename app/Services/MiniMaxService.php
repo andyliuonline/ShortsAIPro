@@ -17,6 +17,8 @@ class MiniMaxService
 
     public function analyzeVideo(array $context)
     {
+        $user = auth()->user();
+        $provider = $user->analysis_model_provider ?? 'minimax';
         $targetLang = ($context['locale'] ?? 'zh_TW') === 'zh_TW' ? 'Traditional Chinese (繁體中文)' : 'English';
 
         $prompt = "
@@ -38,6 +40,15 @@ class MiniMaxService
             Format: Strictly JSON.
         ";
 
+        if ($provider === 'openai' && $user->user_openai_api_key) {
+            return $this->callOpenAI($prompt, $user->user_openai_api_key);
+        }
+
+        if ($provider === 'anthropic' && $user->user_anthropic_api_key) {
+            return $this->callAnthropic($prompt, $user->user_anthropic_api_key);
+        }
+
+        // Default to MiniMax (System Key)
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . $this->apiKey,
@@ -60,12 +71,35 @@ class MiniMaxService
         }
 
         $text = $response->json()['choices'][0]['message']['content'] ?? '';
-        
-        // Clean up markdown code blocks if any
+        return $this->parseJsonResponse($text);
+    }
+
+    protected function callOpenAI($prompt, $key)
+    {
+        $response = Http::withToken($key)->post('https://api.openai.com/v1/chat/completions', [
+            'model' => 'gpt-4o',
+            'messages' => [['role' => 'user', 'content' => $prompt]],
+            'response_format' => ['type' => 'json_object']
+        ]);
+        return $response->json()['choices'][0]['message']['content'] ? json_decode($response->json()['choices'][0]['message']['content'], true) : null;
+    }
+
+    protected function callAnthropic($prompt, $key)
+    {
+        $response = Http::withHeaders(['x-api-key' => $key, 'anthropic-version' => '2023-06-01'])->post('https://api.anthropic.com/v1/messages', [
+            'model' => 'claude-3-5-sonnet-20240620',
+            'max_tokens' => 4096,
+            'messages' => [['role' => 'user', 'content' => $prompt . " \n\n IMPORTANT: Output ONLY raw JSON."]]
+        ]);
+        $text = $response->json()['content'][0]['text'] ?? '';
+        return $this->parseJsonResponse($text);
+    }
+
+    protected function parseJsonResponse($text)
+    {
         if (preg_match('/\{[\s\S]*\}/', $text, $matches)) {
             return json_decode($matches[0], true);
         }
-
         return null;
     }
 }

@@ -15,9 +15,14 @@ class KieAIService
 
     public function createVideoTask(string $prompt, ?string $model = null)
     {
-        $model = $model ?: (\App\Models\Setting::where('key', 'sora_model_id')->value('value') ?: 'sora-2-text-to-video');
+        $user = auth()->user();
+        $apiKey = ($user->video_model_provider === 'kie' && $user->user_kie_api_key) 
+            ? $user->user_kie_api_key 
+            : $this->apiKey;
+
+        $model = $model ?: ($user->video_model_id ?: (\App\Models\Setting::where('key', 'sora_model_id')->value('value') ?: 'sora-2-text-to-video'));
         
-        $response = Http::withToken($this->apiKey)
+        $response = Http::withToken($apiKey)
             ->post('https://api.kie.ai/api/v1/jobs/createTask', [
                 'model' => $model,
                 'input' => [
@@ -37,7 +42,12 @@ class KieAIService
 
     public function getTaskStatus(string $taskId)
     {
-        $response = Http::withToken($this->apiKey)
+        $user = auth()->user();
+        $apiKey = ($user->video_model_provider === 'kie' && $user->user_kie_api_key) 
+            ? $user->user_kie_api_key 
+            : $this->apiKey;
+
+        $response = Http::withToken($apiKey)
             ->get("https://api.kie.ai/api/v1/jobs/recordInfo?taskId={$taskId}");
 
         if ($response->failed() || ($response->json()['code'] ?? 0) !== 200) {

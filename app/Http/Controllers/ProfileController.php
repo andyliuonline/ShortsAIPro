@@ -21,7 +21,32 @@ class ProfileController extends Controller
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'apiSettings' => [
+                'video_model_provider' => $request->user()->video_model_provider,
+                'video_model_id' => $request->user()->video_model_id,
+                'user_kie_api_key' => $request->user()->user_kie_api_key,
+                'analysis_model_provider' => $request->user()->analysis_model_provider,
+                'user_openai_api_key' => $request->user()->user_openai_api_key,
+                'user_anthropic_api_key' => $request->user()->user_anthropic_api_key,
+            ],
         ]);
+    }
+
+    public function updateApiSettings(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'video_model_provider' => 'required|string',
+            'video_model_id' => 'required|string',
+            'user_kie_api_key' => 'nullable|string',
+            'analysis_model_provider' => 'required|string',
+            'user_openai_api_key' => 'nullable|string',
+            'user_anthropic_api_key' => 'nullable|string',
+        ]);
+
+        $request->user()->fill($validated);
+        $request->user()->save();
+
+        return back()->with('status', 'api-settings-updated');
     }
 
     /**
