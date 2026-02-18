@@ -17,6 +17,8 @@ class MiniMaxService
 
     public function analyzeVideo(array $context)
     {
+        $targetLang = ($context['locale'] ?? 'zh_TW') === 'zh_TW' ? 'Traditional Chinese (繁體中文)' : 'English';
+
         $prompt = "
             You are an expert viral short video creator. 
             I will give you details of a trending YouTube Short. 
@@ -26,11 +28,12 @@ class MiniMaxService
             Title: {$context['title']}
             Description: " . ($context['description'] ?? '') . "
 
+            Please provide the response in {$targetLang}.
             Please provide a JSON response with the following fields:
-            1. 'visualPrompt': A highly detailed 3-4 sentence prompt for an AI video generator (Sora/Kling). It should describe the scene, lighting, camera movement, and action. Do not mention copyright characters. Focus on visual impact and high quality.
-            2. 'optimizedTitle': A viral, high-CTR title (Chinese).
-            3. 'seoDescription': A short, SEO-optimized description with hashtags (Chinese).
-            4. 'viralHook': Why this video will go viral (analysis).
+            1. 'visualPrompt': A highly detailed 3-4 sentence prompt for an AI video generator (Sora/Kling). It should describe the scene, lighting, camera movement, and action. Do not mention copyright characters. Focus on visual impact and high quality. (Write this in English even if other fields are in Chinese).
+            2. 'optimizedTitle': A viral, high-CTR title in {$targetLang}.
+            3. 'seoDescription': A short, SEO-optimized description with hashtags in {$targetLang}.
+            4. 'viralHook': Why this video will go viral (detailed analysis in {$targetLang}).
 
             Format: Strictly JSON.
         ";

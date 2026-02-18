@@ -41,6 +41,7 @@ class DiscoveryController extends Controller
         $context = [
             'title' => $videoData['snippet']['title'],
             'description' => $videoData['snippet']['description'],
+            'locale' => session('locale', 'zh_TW'),
         ];
 
         $plan = $minimax->analyzeVideo($context);
