@@ -177,10 +177,10 @@ export default function UpdateApiSettingsForm() {
                                 <label className="block text-[10px] uppercase font-black text-gray-400 dark:text-zinc-500 tracking-[0.2em] mb-4">1. 選擇服務供應商</label>
                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                                     {[
-                                        { id: 'system', label: 'ShortsAI 系統', desc: '全自動/免費' },
-                                        { id: 'openai', label: 'OpenAI', desc: 'ChatGPT' },
-                                        { id: 'anthropic', label: 'Anthropic', desc: 'Claude' },
-                                        { id: 'google', label: 'Google Cloud', desc: 'Gemini' }
+                                        { id: 'system', label: 'ShortsAI 系統', sub: '全自動/免費' },
+                                        { id: 'openai', label: 'ChatGPT', sub: 'OpenAI' },
+                                        { id: 'anthropic', label: 'Claude', sub: 'Anthropic' },
+                                        { id: 'google', label: 'Gemini', sub: 'Google Cloud' }
                                     ].map((prov) => (
                                         <button
                                             key={prov.id}
@@ -192,7 +192,7 @@ export default function UpdateApiSettingsForm() {
                                             className={`p-4 rounded-2xl text-left border-2 transition-all group ${data.analysis_model_provider === prov.id ? 'bg-yellow-400 border-yellow-400 shadow-lg shadow-yellow-400/20' : 'bg-gray-50 dark:bg-zinc-950 border-transparent hover:border-gray-200 dark:hover:border-zinc-700'}`}
                                         >
                                             <p className={`text-sm font-black ${data.analysis_model_provider === prov.id ? 'text-black' : 'text-gray-900 dark:text-white'}`}>{prov.label}</p>
-                                            <p className={`text-[10px] mt-1 font-bold ${data.analysis_model_provider === prov.id ? 'text-black/60' : 'text-gray-400 dark:text-zinc-500'}`}>{prov.desc}</p>
+                                            <p className={`text-[10px] mt-1 font-bold ${data.analysis_model_provider === prov.id ? 'text-black/60' : 'text-gray-400 dark:text-zinc-500'}`}>{prov.sub}</p>
                                         </button>
                                     ))}
                                 </div>
