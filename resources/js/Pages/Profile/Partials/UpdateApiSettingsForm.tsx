@@ -25,18 +25,18 @@ export default function UpdateApiSettingsForm() {
 
     const modelOptions: any = {
         openai: [
+            { id: 'o3-mini', label: 'o3-mini (OpenAI 最新)' },
             { id: 'gpt-4o', label: 'GPT-4o (推薦)' },
-            { id: 'gpt-4o-mini', label: 'GPT-4o mini' },
-            { id: 'gpt-4-turbo', label: 'GPT-4 Turbo' }
+            { id: 'o1-preview', label: 'o1-preview (強推理)' }
         ],
         anthropic: [
-            { id: 'claude-3-5-sonnet-20240620', label: 'Claude 3.5 Sonnet' },
-            { id: 'claude-3-opus-20240229', label: 'Claude 3 Opus' },
-            { id: 'claude-3-haiku-20240307', label: 'Claude 3 Haiku' }
+            { id: 'claude-3-7-sonnet-20250219', label: 'Claude 3.7 Sonnet (最新)' },
+            { id: 'claude-3-5-sonnet-20241022', label: 'Claude 3.5 Sonnet v2' },
+            { id: 'claude-3-5-haiku-20241022', label: 'Claude 3.5 Haiku' }
         ],
         google: [
-            { id: 'gemini-2.0-flash', label: 'Gemini 2.0 Flash' },
-            { id: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro' }
+            { id: 'gemini-2.0-pro-exp-02-05', label: 'Gemini 2.0 Pro (最新)' },
+            { id: 'gemini-2.0-flash', label: 'Gemini 2.0 Flash' }
         ],
         system: [
             { id: 'default', label: '系統自動分配 (免費)' }
