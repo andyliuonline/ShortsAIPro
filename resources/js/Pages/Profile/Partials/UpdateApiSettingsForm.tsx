@@ -1,6 +1,6 @@
 import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
-import { Key, Video, BrainCircuit, ExternalLink, HelpCircle, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Key, Video, BrainCircuit, ExternalLink, HelpCircle, Sparkles, CheckCircle2, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function UpdateApiSettingsForm() {
