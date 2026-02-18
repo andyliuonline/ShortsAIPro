@@ -48,6 +48,21 @@ export default function Dashboard() {
     const [isEditingPrompt, setIsEditingPrompt] = useState(false);
     const [editedPrompt, setEditedPrompt] = useState("");
 
+    // Fancy Confirmation States
+    const [confirmModal, setConfirmModal] = useState<{
+        isOpen: boolean;
+        title: string;
+        message: string;
+        action: () => void;
+        type: 'remake' | 'generate';
+    }>({
+        isOpen: false,
+        title: '',
+        message: '',
+        action: () => {},
+        type: 'remake'
+    });
+
     // Gamification Data State
     const [gamificationData, setGamificationData] = useState<any>({ leaderboard: [], achievements: [], stats: {} });
 
@@ -149,51 +164,66 @@ export default function Dashboard() {
     };
 
     const startAnalysis = async (video: any) => {
-        if (!confirm("確定要重製此影片嗎？這將會消耗您的生成額度。")) return;
-        
-        setSelectedVideo(video);
-        setAnalyzing(true);
-        setRemakePlan(null);
-        setTaskStatus(null);
-        setPublished(false);
-        setCurrentTaskId(null);
-        
-        try {
-            const res = await axios.post('/api/remake', { videoId: video.id });
-            if (res.data.success) {
-                setRemakePlan(res.data.plan);
-                setEditedPrompt(res.data.plan.visualPrompt);
-            } else {
-                throw new Error(res.data.error || "分析失敗");
+        setConfirmModal({
+            isOpen: true,
+            title: "準備好重製了嗎？",
+            message: "AI 將會深度分析此影片的爆紅基因並為您量身打造重製計畫。這將會消耗您的生成額度。",
+            type: 'remake',
+            action: async () => {
+                setConfirmModal(prev => ({ ...prev, isOpen: false }));
+                setSelectedVideo(video);
+                setAnalyzing(true);
+                setRemakePlan(null);
+                setTaskStatus(null);
+                setPublished(false);
+                setCurrentTaskId(null);
+                
+                try {
+                    const res = await axios.post('/api/remake', { videoId: video.id });
+                    if (res.data.success) {
+                        setRemakePlan(res.data.plan);
+                        setEditedPrompt(res.data.plan.visualPrompt);
+                    } else {
+                        throw new Error(res.data.error || "分析失敗");
+                    }
+                } catch (err: any) {
+                    alert(`AI 分析失敗: ${err.response?.data?.error || err.message}`);
+                    setSelectedVideo(null);
+                } finally {
+                    setAnalyzing(false);
+                }
             }
-        } catch (err: any) {
-            alert(`AI 分析失敗: ${err.response?.data?.error || err.message}`);
-            setSelectedVideo(null);
-        } finally {
-            setAnalyzing(false);
-        }
+        });
     };
 
     const startGeneration = async () => {
         if (!remakePlan) return;
-        if (!confirm("確定要開始生成影片嗎？")) return;
         
-        setGenerating(true);
-        try {
-            const res = await axios.post('/api/generate', { 
-                prompt: editedPrompt || remakePlan.visualPrompt,
-                plan: { ...remakePlan, visualPrompt: editedPrompt || remakePlan.visualPrompt },
-                selectedVideo: selectedVideo
-            });
-            if (res.data.success) {
-                setCurrentTaskId(res.data.taskId);
-            } else {
-                throw new Error(res.data.error || "生成請求失敗");
+        setConfirmModal({
+            isOpen: true,
+            title: "啟動 AI 創作引擎",
+            message: "您即將送出重製計畫，Sora 2 將開始為您生成 100% 原創的高清影片。準備好見證奇蹟了嗎？",
+            type: 'generate',
+            action: async () => {
+                setConfirmModal(prev => ({ ...prev, isOpen: false }));
+                setGenerating(true);
+                try {
+                    const res = await axios.post('/api/generate', { 
+                        prompt: editedPrompt || remakePlan.visualPrompt,
+                        plan: { ...remakePlan, visualPrompt: editedPrompt || remakePlan.visualPrompt },
+                        selectedVideo: selectedVideo
+                    });
+                    if (res.data.success) {
+                        setCurrentTaskId(res.data.taskId);
+                    } else {
+                        throw new Error(res.data.error || "生成請求失敗");
+                    }
+                } catch (err: any) {
+                    alert(`啟動生成失敗: ${err.response?.data?.error || err.message}`);
+                    setGenerating(false);
+                }
             }
-        } catch (err: any) {
-            alert(`啟動生成失敗: ${err.response?.data?.error || err.message}`);
-            setGenerating(false);
-        }
+        });
     };
 
     const handlePublish = async () => {
@@ -867,6 +897,40 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             ) : null}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Fancy Confirmation Modal */}
+            {confirmModal.isOpen && (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-zinc-950/80 backdrop-blur-md animate-in fade-in duration-300"></div>
+                    <div className="relative w-full max-w-md bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 rounded-[2.5rem] p-8 shadow-[0_20px_70px_rgba(0,0,0,0.4)] animate-in zoom-in-95 duration-300">
+                        <div className="flex flex-col items-center text-center space-y-6">
+                            <div className={`w-20 h-20 rounded-[2rem] flex items-center justify-center shadow-2xl ${confirmModal.type === 'remake' ? 'bg-yellow-400 text-black shadow-yellow-400/20' : 'bg-orange-500 text-white shadow-orange-500/20'}`}>
+                                {confirmModal.type === 'remake' ? <Zap size={40} className="fill-current" /> : <Sparkles size={40} className="fill-current" />}
+                            </div>
+                            
+                            <div className="space-y-2">
+                                <h3 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">{confirmModal.title}</h3>
+                                <p className="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed px-4">{confirmModal.message}</p>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4 w-full pt-4">
+                                <button 
+                                    onClick={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
+                                    className="px-6 py-4 rounded-2xl bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white font-bold text-sm hover:bg-gray-200 dark:hover:bg-zinc-700 transition-all active:scale-95"
+                                >
+                                    再想想
+                                </button>
+                                <button 
+                                    onClick={confirmModal.action}
+                                    className={`px-6 py-4 rounded-2xl font-black text-sm shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 ${confirmModal.type === 'remake' ? 'bg-yellow-400 text-black hover:bg-yellow-300' : 'bg-orange-500 text-white hover:bg-orange-400'}`}
+                                >
+                                    確定執行 <Play size={14} fill="currentColor" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
