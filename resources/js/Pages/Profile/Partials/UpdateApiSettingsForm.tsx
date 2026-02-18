@@ -165,7 +165,7 @@ export default function UpdateApiSettingsForm() {
                                     <div className="flex gap-3">
                                         <div className="w-5 h-5 rounded-full bg-blue-500 text-white text-[10px] flex items-center justify-center shrink-0 mt-0.5 font-bold">1</div>
                                         <p className="text-xs text-blue-800/70 dark:text-blue-300/70 font-medium leading-relaxed">
-                                            訪問 <a href="https://kie.ai" target="_blank" className="text-blue-600 dark:text-blue-400 underline font-bold inline-flex items-center gap-0.5">Kie.ai 官網 <ExternalLink size={10} /></a> 並完成註冊。
+                                            訪問 <a href="https://kie.ai?ref=35650a0f230acb573b544f8f0f3858b2" target="_blank" className="text-blue-600 dark:text-blue-400 underline font-bold inline-flex items-center gap-0.5">Kie.ai 官網 <ExternalLink size={10} /></a> 並完成註冊。
                                         </p>
                                     </div>
                                     <div className="flex gap-3">
