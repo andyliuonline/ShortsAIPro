@@ -79,8 +79,20 @@ export default function UpdateApiSettingsForm() {
                                     onChange={(e) => setData('video_model_id', e.target.value)}
                                     className="w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-white py-3 px-4 font-bold focus:ring-2 focus:ring-yellow-400/50 transition-all outline-none"
                                 >
-                                    <option value="sora-2-text-to-video">Sora 2 (Kie.ai 支援)</option>
-                                    <option value="kling-v1-text-to-video">Kling V1 (Kie.ai 支援)</option>
+                                    <optgroup label="Sora 系列">
+                                        <option value="sora-2-text-to-video">Sora 2 (720p)</option>
+                                    </optgroup>
+                                    <optgroup label="Kling 系列 (高品質)">
+                                        <option value="kling-v1-text-to-video">Kling V1.0 (720p)</option>
+                                        <option value="kling-v1-5-text-to-video">Kling V1.5 (1080p)</option>
+                                        <option value="kling-v1-5-text-to-video-1080p">Kling V1.5 (1080p High)</option>
+                                    </optgroup>
+                                    <optgroup label="Luma 系列">
+                                        <option value="luma-dream-machine">Luma Dream Machine</option>
+                                    </optgroup>
+                                    <optgroup label="Haiper 系列">
+                                        <option value="haiper-video-v2">Haiper V2 (1080p)</option>
+                                    </optgroup>
                                 </select>
                             </div>
 
