@@ -1,12 +1,11 @@
 import { useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { Key, Video, BrainCircuit, ExternalLink, HelpCircle, Sparkles, CheckCircle2, Loader2, Eye, EyeOff } from 'lucide-react';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 
 export default function UpdateApiSettingsForm() {
     const { apiSettings } = usePage<any>().props;
 
-    const [isFocused, setIsFocused] = useState<Record<string, boolean>>({});
     const [showKey, setShowKey] = useState<Record<string, boolean>>({});
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
@@ -63,28 +62,28 @@ export default function UpdateApiSettingsForm() {
     };
 
     const renderInput = (field: string, currentSavedValue: string, placeholder: string) => {
-        const hasValue = !!currentSavedValue;
+        const hasSavedValue = !!currentSavedValue;
         const typing = !!data[field as keyof typeof data];
-        const displayMask = hasValue && !typing && !isFocused[field];
+        const isVisible = showKey[field];
 
         return (
             <div className="relative group/input">
                 <input
-                    type={showKey[field] ? "text" : "password"}
-                    value={isFocused[field] ? (data[field as keyof typeof data] || '') : (displayMask ? maskKey(currentSavedValue) : data[field as keyof typeof data])}
+                    type={isVisible ? "text" : "password"}
+                    value={data[field as keyof typeof data]}
                     onChange={(e) => setData(field as any, e.target.value)}
-                    onFocus={() => setIsFocused({ ...isFocused, [field]: true })}
-                    onBlur={() => setIsFocused({ ...isFocused, [field]: false })}
-                    placeholder={displayMask ? "" : placeholder}
-                    className={`w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 py-3.5 pl-5 pr-12 font-mono text-sm transition-all outline-none focus:ring-2 focus:ring-yellow-400/50 ${displayMask ? 'text-green-500 font-black tracking-widest' : 'text-gray-900 dark:text-white'}`}
+                    placeholder={hasSavedValue ? `已配置: ${maskKey(currentSavedValue)}` : placeholder}
+                    className={`w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 py-3.5 pl-5 pr-12 font-mono text-sm transition-all outline-none focus:ring-2 focus:ring-yellow-400/50 ${hasSavedValue && !typing ? 'placeholder:text-green-500 placeholder:font-black placeholder:tracking-widest' : 'text-gray-900 dark:text-white'}`}
                 />
-                <button
-                    type="button"
-                    onClick={() => setShowKey({ ...showKey, [field]: !showKey[field] })}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
-                >
-                    {showKey[field] ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
+                {typing && (
+                    <button
+                        type="button"
+                        onClick={() => setShowKey({ ...showKey, [field]: !isVisible })}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                    >
+                        {isVisible ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                )}
             </div>
         );
     };
@@ -279,7 +278,7 @@ export default function UpdateApiSettingsForm() {
                                         </h4>
                                         <div className="space-y-4">
                                             <p className="text-sm text-orange-800/70 dark:text-orange-300/70 font-medium leading-relaxed mb-4">
-                                                使用您自己的帳戶來獲取更深度的爆紅基因分析：
+                                                使用您自己的帳戶來獲取更精準的分析或更高的查詢頻率：
                                             </p>
                                             <ul className="space-y-3">
                                                 <li>
