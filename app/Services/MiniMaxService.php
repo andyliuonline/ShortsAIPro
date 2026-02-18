@@ -59,11 +59,16 @@ class MiniMaxService
 
     protected function callMiniMax($prompt)
     {
+        $user = auth()->user();
+        $model = ($user->analysis_model_provider === 'system' && $user->analysis_model_id !== 'default') 
+            ? $user->analysis_model_id 
+            : $this->model;
+
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . $this->apiKey,
         ])->post("https://api.minimaxi.com/v1/text/chatcompletion_v2", [
-            'model' => $this->model,
+            'model' => $model,
             'messages' => [
                 ['role' => 'system', 'content' => 'You are a professional video content analyst. Always respond in valid JSON format.'],
                 ['role' => 'user', 'content' => $prompt],

@@ -17,13 +17,16 @@ class GoogleAuthController extends Controller
                 'https://www.googleapis.com/auth/youtube.readonly',
             ])
             ->with(['access_type' => 'offline', 'prompt' => 'consent'])
+            ->redirectUrl(config('services.google.redirect'))
             ->redirect();
     }
 
     public function callback()
     {
         try {
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')
+                ->redirectUrl(config('services.google.redirect'))
+                ->user();
             
             /** @var User $user */
             $user = Auth::user();

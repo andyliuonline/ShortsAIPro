@@ -17,6 +17,10 @@ class ForceCanonicalDomain
     {
         $host = $request->header('host');
 
+        if (app()->environment('local')) {
+            return $next($request);
+        }
+
         // If host starts with www. or is not https
         if (str_starts_with($host, 'www.') || !$request->secure()) {
             $newHost = str_replace('www.', '', $host);

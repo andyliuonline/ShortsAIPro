@@ -41,7 +41,8 @@ export default function UpdateApiSettingsForm() {
             { id: 'gemini-2.0-flash', label: 'Gemini 2.0 Flash' }
         ],
         system: [
-            { id: 'default', label: '系統自動分配 (免費)' }
+            { id: 'default', label: '系統自動分配 (免費)' },
+            { id: 'minimax-cn/MiniMax-M2.5-highspeed', label: 'MiniMax M2.5 高速版' }
         ]
     };
 

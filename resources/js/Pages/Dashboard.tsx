@@ -44,6 +44,10 @@ export default function Dashboard() {
     const [publishing, setPublishing] = useState(false);
     const [published, setPublished] = useState(false);
 
+    // Prompt Edit State
+    const [isEditingPrompt, setIsEditingPrompt] = useState(false);
+    const [editedPrompt, setEditedPrompt] = useState("");
+
     // Gamification Data State
     const [gamificationData, setGamificationData] = useState<any>({ leaderboard: [], achievements: [], stats: {} });
 
@@ -145,6 +149,8 @@ export default function Dashboard() {
     };
 
     const startAnalysis = async (video: any) => {
+        if (!confirm("確定要重製此影片嗎？這將會消耗您的生成額度。")) return;
+        
         setSelectedVideo(video);
         setAnalyzing(true);
         setRemakePlan(null);
@@ -156,6 +162,7 @@ export default function Dashboard() {
             const res = await axios.post('/api/remake', { videoId: video.id });
             if (res.data.success) {
                 setRemakePlan(res.data.plan);
+                setEditedPrompt(res.data.plan.visualPrompt);
             } else {
                 throw new Error(res.data.error || "分析失敗");
             }
@@ -169,11 +176,13 @@ export default function Dashboard() {
 
     const startGeneration = async () => {
         if (!remakePlan) return;
+        if (!confirm("確定要開始生成影片嗎？")) return;
+        
         setGenerating(true);
         try {
             const res = await axios.post('/api/generate', { 
-                prompt: remakePlan.visualPrompt,
-                plan: remakePlan,
+                prompt: editedPrompt || remakePlan.visualPrompt,
+                plan: { ...remakePlan, visualPrompt: editedPrompt || remakePlan.visualPrompt },
                 selectedVideo: selectedVideo
             });
             if (res.data.success) {
@@ -781,8 +790,27 @@ export default function Dashboard() {
                                                 <p className="text-sm text-gray-600 dark:text-zinc-300 leading-relaxed">{remakePlan.viralHook}</p>
                                             </div>
                                             <div className="p-4 rounded-xl bg-gray-50 dark:bg-zinc-950 border border-gray-100 dark:border-zinc-800">
-                                                <label className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-zinc-500 font-black">AI 視覺 Prompt</label>
-                                                <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1 italic leading-relaxed">"{remakePlan.visualPrompt}"</p>
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <label className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-zinc-500 font-black">AI 視覺 Prompt</label>
+                                                    {!generating && taskStatus?.state !== 'success' && (
+                                                        <button 
+                                                            onClick={() => setIsEditingPrompt(!isEditingPrompt)}
+                                                            className="text-[10px] font-bold text-yellow-600 dark:text-yellow-400 hover:underline"
+                                                        >
+                                                            {isEditingPrompt ? '取消編輯' : '修改描述'}
+                                                        </button>
+                                                    )}
+                                                </div>
+                                                {isEditingPrompt ? (
+                                                    <textarea 
+                                                        value={editedPrompt}
+                                                        onChange={(e) => setEditedPrompt(e.target.value)}
+                                                        className="w-full bg-white dark:bg-zinc-900 border border-yellow-400/30 rounded-lg p-2 text-xs text-gray-700 dark:text-zinc-300 focus:ring-1 focus:ring-yellow-400 outline-none h-24"
+                                                    />
+                                                ) : (
+                                                    <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1 italic leading-relaxed">"{editedPrompt || remakePlan.visualPrompt}"</p>
+                                                )}
+                                                <p className="mt-2 text-[10px] text-gray-400 dark:text-zinc-500 italic">💡 提示：您可以根據需求微調 AI 產生的視覺描述。</p>
                                             </div>
                                         </div>
                                     </div>
