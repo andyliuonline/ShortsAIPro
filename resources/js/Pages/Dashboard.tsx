@@ -743,7 +743,7 @@ export default function Dashboard() {
                             {analyzing ? (
                                 <div className="py-20 flex flex-col items-center justify-center gap-4">
                                     <Loader2 className="animate-spin text-yellow-500 dark:text-yellow-400" size={48} />
-                                    <p className="text-gray-500 dark:text-zinc-400 animate-pulse font-bold">MiniMax 正在深度分析影片爆紅基因...</p>
+                                    <p className="text-gray-500 dark:text-zinc-400 animate-pulse font-bold">ShortsAIPro 正在深度分析影片爆紅基因...</p>
                                 </div>
                             ) : remakePlan ? (
                                 <div className="space-y-6 text-left">
