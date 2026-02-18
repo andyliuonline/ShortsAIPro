@@ -36,6 +36,8 @@ class ProfileController extends Controller
 
     public function updateApiSettings(Request $request): RedirectResponse
     {
+        $user = $request->user();
+        
         $validated = $request->validate([
             'video_model_provider' => 'required|string',
             'video_model_id' => 'required|string',
@@ -47,8 +49,15 @@ class ProfileController extends Controller
             'user_google_api_key' => 'nullable|string',
         ]);
 
-        $request->user()->fill($validated);
-        $request->user()->save();
+        // Only update keys if they are not empty (prevent accidental clear-on-save)
+        $dataToUpdate = $validated;
+        foreach (['user_kie_api_key', 'user_openai_api_key', 'user_anthropic_api_key', 'user_google_api_key'] as $keyField) {
+            if (empty($dataToUpdate[$keyField])) {
+                unset($dataToUpdate[$keyField]);
+            }
+        }
+
+        $user->update($dataToUpdate);
 
         return back()->with('status', 'api-settings-updated');
     }

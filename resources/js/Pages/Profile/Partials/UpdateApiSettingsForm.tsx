@@ -48,14 +48,7 @@ export default function UpdateApiSettingsForm() {
         patch(route('profile.api-settings.update'), {
             preserveScroll: true,
             onSuccess: () => {
-                // Clear password fields after success to maintain security feel
-                setData({
-                    ...data,
-                    user_kie_api_key: '',
-                    user_openai_api_key: '',
-                    user_anthropic_api_key: '',
-                    user_google_api_key: '',
-                });
+                // Keep the existing data in the form, don't clear it
             }
         });
     };
