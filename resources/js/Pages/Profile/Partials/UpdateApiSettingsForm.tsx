@@ -72,7 +72,7 @@ export default function UpdateApiSettingsForm() {
                     type={isVisible ? "text" : "password"}
                     value={data[field as keyof typeof data]}
                     onChange={(e) => setData(field as any, e.target.value)}
-                    placeholder={hasSavedValue ? `已配置: ${maskKey(currentSavedValue)}` : placeholder}
+                    placeholder={hasSavedValue ? maskKey(currentSavedValue) : placeholder}
                     className={`w-full rounded-2xl border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 py-3.5 pl-5 pr-12 font-mono text-sm transition-all outline-none focus:ring-2 focus:ring-yellow-400/50 ${hasSavedValue && !typing ? 'placeholder:text-green-500 placeholder:font-black placeholder:tracking-widest' : 'text-gray-900 dark:text-white'}`}
                 />
                 {typing && (
